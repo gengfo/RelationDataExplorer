@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="ARP" transaction-type="JTA">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<jta-data-source>ipsDev</jta-data-source>
+		<class>com.oocl.ir4.arp.entity.backendtask.CargoSmartTask</class>
+		<class>com.oocl.ir4.arp.entity.backendtask.FODEDMStub</class>
+		<class>com.oocl.ir4.arp.entity.backendtask.FODEDMTask</class>
+		<class>com.oocl.ir4.arp.entity.backendtask.InterfaceTask</class>
+		<class>com.oocl.ir4.arp.entity.backendtask.MCCINMTask</class>
+		<class>com.oocl.ir4.arp.entity.common.audittrail.AuditTrail</class>
+		<class>com.oocl.ir4.arp.entity.common.audittrail.AuditTrailDetail</class>
+		<class>com.oocl.ir4.arp.entity.common.printer.Printer</class>
+		<class>com.oocl.ir4.arp.entity.common.printer.PrinterSetting</class>
+		<class>com.oocl.ir4.arp.entity.doc.BLCargoSpecInfo</class>
+		<class>com.oocl.ir4.arp.entity.doc.BLEquipmentInfo</class>
+		<class>com.oocl.ir4.arp.entity.doc.BLInfo</class>
+		<class>com.oocl.ir4.arp.entity.doc.BLPackageInfo</class>
+		<class>com.oocl.ir4.arp.entity.doc.BLReference</class>
+		<class>com.oocl.ir4.arp.entity.edi.EDIHistory</class>
+		<class>com.oocl.ir4.arp.entity.edi.EDIInvMatchHistoryDetail</class>
+		<class>com.oocl.ir4.arp.entity.edi.RejectedEDIInvoiceMatch</class>
+		<class>com.oocl.ir4.arp.entity.edoc.InvoiceContainer</class>
+		<class>com.oocl.ir4.arp.entity.edoc.InvoiceDoc</class>
+		<class>com.oocl.ir4.arp.entity.edoc.InvoiceDocItem</class>
+		<class>com.oocl.ir4.arp.entity.invoice.ChargeContainer</class>
+		<class>com.oocl.ir4.arp.entity.invoice.Invoice</class>
+		<class>com.oocl.ir4.arp.entity.invoice.InvoiceCharge</class>
+		<class>com.oocl.ir4.arp.entity.invoice.InvoiceExchRate</class>
+		<class>com.oocl.ir4.arp.entity.invoice.PooledCharge</class>
+		<class>com.oocl.ir4.arp.entity.invoice.PooledChargeSnapshot</class>
+		<class>com.oocl.ir4.arp.entity.invoiceadj.InvoiceAdjustment</class>
+		<class>com.oocl.ir4.arp.entity.invoiceadj.InvoiceAdjustmentItem</class>
+		<class>com.oocl.ir4.arp.entity.invoicematch.CostItemMatchInfo</class>
+		<class>com.oocl.ir4.arp.entity.invoicematch.InvoiceMatchItem</class>
+		<class>com.oocl.ir4.arp.entity.invoicematch.InvoiceMatchNote</class>
+		<class>com.oocl.ir4.arp.entity.invoicematch.JobOrderAmtInfo</class>
+		<class>com.oocl.ir4.arp.entity.invoicematch.JobOrderMatchInfo</class>
+		<class>com.oocl.ir4.arp.entity.payment.Payment</class>
+		<class>com.oocl.ir4.arp.entity.payment.PaymentEntry</class>
+		<class>com.oocl.ir4.arp.entity.paymentadj.PaymentAdjustment</class>
+		<class>com.oocl.ir4.arp.entity.paymentadj.PaymentAdjustmentEntry</class>
+		<class>com.oocl.ir4.arp.entity.paymentadj.PaymentTransfer</class>
+		<class>com.oocl.ir4.arp.entity.paymentinstruction.PaymentInstruction</class>
+		<class>com.oocl.ir4.arp.entity.paymentinstruction.PaymentInstructionEntry</class>
+		<class>com.oocl.ir4.arp.entity.paymentinstruction.PaymentInstructionHistory</class>
+		<class>com.oocl.ir4.arp.entity.rule.FinancialRule</class>
+		<class>com.oocl.ir4.arp.entity.rule.OfficePaymentMethod</class>
+		<class>com.oocl.ir4.arp.entity.rule.OfficePrinter</class>
+		<class>com.oocl.ir4.arp.entity.rule.OfficeTaxInvoiceFormat</class>
+		<class>com.oocl.ir4.arp.entity.rule.RuleBank</class>
+		<class>com.oocl.ir4.arp.entity.sps.JobCostItem</class>
+		<class>com.oocl.ir4.arp.entity.sps.JobOrder</class>
+		<class>com.oocl.ir4.arp.entity.sps.JobOrderReferenceNo</class>
+		<class>com.oocl.ir4.arp.entity.suppdata.AdjustmentType</class>
+		<class>com.oocl.ir4.arp.entity.suppdata.CancelInvMatchReason</class>
+		<class>com.oocl.ir4.arp.entity.suppdata.CancelPaymentReason</class>
+		<class>com.oocl.ir4.arp.entity.suppdata.DueReason</class>
+		<class>com.oocl.ir4.arp.entity.suppdata.I18NResource</class>
+		<class>com.oocl.ir4.arp.entity.suppdata.InvoiceLanguage</class>
+		<class>com.oocl.ir4.arp.entity.suppdata.Measurement</class>
+		<class>com.oocl.ir4.arp.entity.suppdata.PaymentMethod</class>
+		<class>com.oocl.ir4.arp.entity.suppdata.RejectInvMatchReason</class>
+		<class>com.oocl.ir4.arp.entity.suppdata.SuppData</class>
+		<class>com.oocl.ir4.arp.entity.suppdata.TaxInvoiceFormat</class>
+		<class>com.oocl.ir4.arp.entity.suppdata.TaxInvoiceSubFormat</class>
+		<class>com.oocl.ir4.arp.entity.suppdata.UserPreference</class>
+		<class>com.oocl.ir4.arp.entity.suppdata.VoidTaxInvoiceReason</class>
+		<class>com.oocl.ir4.arp.entity.suppdata.chrgcode.VatRate</class>
+		<class>com.oocl.ir4.arp.entity.suppdata.seqnum.SequenceNumber</class>
+		<class>com.oocl.ir4.arp.entity.suppdata.seqnum.SequenceNumberAlloc</class>
+		<class>com.oocl.ir4.arp.entity.suppdata.taxinvnum.TaxInvNumDistribution</class>
+		<class>com.oocl.ir4.arp.entity.suppdata.taxinvnum.TaxInvNumRegistration</class>
+		<class>com.oocl.ir4.arp.entity.todolist.DashboardTask</class>
+		<class>com.oocl.ir4.cmn.model.APCostNC</class>
+		<class>com.oocl.ir4.cmn.model.APCostSC</class>
+		<class>com.oocl.ir4.cmn.model.ARCharge</class>
+		<class>com.oocl.ir4.cmn.model.ARChargeAppLevel</class>
+		<class>com.oocl.ir4.cmn.model.ARPymtMeth</class>
+		<class>com.oocl.ir4.cmn.model.BizCoverage</class>
+		<class>com.oocl.ir4.cmn.model.BkgStatus</class>
+		<class>com.oocl.ir4.cmn.model.CargoDensity</class>
+		<class>com.oocl.ir4.cmn.model.CargoNature</class>
+		<class>com.oocl.ir4.cmn.model.CgoNatureGp</class>
+		<class>com.oocl.ir4.cmn.model.CgoPkgMaterial</class>
+		<class>com.oocl.ir4.cmn.model.CgoPkgType</class>
+		<class>com.oocl.ir4.cmn.model.ChgCalMeth</class>
+		<class>com.oocl.ir4.cmn.model.ChgCalSrc</class>
+		<class>com.oocl.ir4.cmn.model.ChgPymtMode</class>
+		<class>com.oocl.ir4.cmn.model.CnvRatio</class>
+		<class>com.oocl.ir4.cmn.model.ContainerCategory</class>
+		<class>com.oocl.ir4.cmn.model.ContainerFillStatus</class>
+		<class>com.oocl.ir4.cmn.model.ContainerSize</class>
+		<class>com.oocl.ir4.cmn.model.ContainerSizeType</class>
+		<class>com.oocl.ir4.cmn.model.ContainerStatus</class>
+		<class>com.oocl.ir4.cmn.model.Currency</class>
+		<class>com.oocl.ir4.cmn.model.DgCgoCateg</class>
+		<class>com.oocl.ir4.cmn.model.DgCl7LSASCO</class>
+		<class>com.oocl.ir4.cmn.model.DgCl7PhyFm</class>
+		<class>com.oocl.ir4.cmn.model.DgCl7PkgCt</class>
+		<class>com.oocl.ir4.cmn.model.DgCl7PkgTy</class>
+		<class>com.oocl.ir4.cmn.model.DgCl7SAcT</class>
+		<class>com.oocl.ir4.cmn.model.DgCl7TranI</class>
+		<class>com.oocl.ir4.cmn.model.DistanceUnit</class>
+		<class>com.oocl.ir4.cmn.model.DocType</class>
+		<class>com.oocl.ir4.cmn.model.Domain</class>
+		<class>com.oocl.ir4.cmn.model.ExtRefType</class>
+		<class>com.oocl.ir4.cmn.model.FlowUnit</class>
+		<class>com.oocl.ir4.cmn.model.FwCmPytMth</class>
+		<class>com.oocl.ir4.cmn.model.GensetType</class>
+		<class>com.oocl.ir4.cmn.model.Haulage</class>
+		<class>com.oocl.ir4.cmn.model.IMDgCateg</class>
+		<class>com.oocl.ir4.cmn.model.IO</class>
+		<class>com.oocl.ir4.cmn.model.Language</class>
+		<class>com.oocl.ir4.cmn.model.LegType</class>
+		<class>com.oocl.ir4.cmn.model.LoadType</class>
+		<class>com.oocl.ir4.cmn.model.LogAPCost</class>
+		<class>com.oocl.ir4.cmn.model.LogARCharge</class>
+		<class>com.oocl.ir4.cmn.model.LogBizSbUt</class>
+		<class>com.oocl.ir4.cmn.model.OrderType</class>
+		<class>com.oocl.ir4.cmn.model.PointAction</class>
+		<class>com.oocl.ir4.cmn.model.RateType</class>
+		<class>com.oocl.ir4.cmn.model.RatingStatus</class>
+		<class>com.oocl.ir4.cmn.model.RoundingOpt</class>
+		<class>com.oocl.ir4.cmn.model.SealType</class>
+		<class>com.oocl.ir4.cmn.model.SensCgoType</class>
+		<class>com.oocl.ir4.cmn.model.ShpPtyRol</class>
+		<class>com.oocl.ir4.cmn.model.TemperatureUnit</class>
+		<class>com.oocl.ir4.cmn.model.TimeUnit</class>
+		<class>com.oocl.ir4.cmn.model.Trade</class>
+		<class>com.oocl.ir4.cmn.model.TradeTerm</class>
+		<class>com.oocl.ir4.cmn.model.Tradebound</class>
+		<class>com.oocl.ir4.cmn.model.Tradelane</class>
+		<class>com.oocl.ir4.cmn.model.TrafficMode</class>
+		<class>com.oocl.ir4.cmn.model.TransportMode</class>
+		<class>com.oocl.ir4.cmn.model.TruckSize</class>
+		<class>com.oocl.ir4.cmn.model.TruckSizeTy</class>
+		<class>com.oocl.ir4.cmn.model.TruckType</class>
+		<class>com.oocl.ir4.cmn.model.VolumeUnit</class>
+		<class>com.oocl.ir4.cmn.model.WeightUnit</class>
+		<class>com.oocl.ir4.cus.model.Address</class>
+		<class>com.oocl.ir4.cus.model.AuditLog</class>
+		<class>com.oocl.ir4.cus.model.CargoSmartCustomer</class>
+		<class>com.oocl.ir4.cus.model.Contact</class>
+		<class>com.oocl.ir4.cus.model.ContactAddress</class>
+		<class>com.oocl.ir4.cus.model.ContactEmailAddress</class>
+		<class>com.oocl.ir4.cus.model.Credit</class>
+		<class>com.oocl.ir4.cus.model.CreditTerm</class>
+		<class>com.oocl.ir4.cus.model.Customer</class>
+		<class>com.oocl.ir4.cus.model.CustomerAlias</class>
+		<class>com.oocl.ir4.cus.model.CustomerClassification</class>
+		<class>com.oocl.ir4.cus.model.CustomerGroup</class>
+		<class>com.oocl.ir4.cus.model.CustomerLevel</class>
+		<class>com.oocl.ir4.cus.model.CustomerName</class>
+		<class>com.oocl.ir4.cus.model.CustomerPrintLabel</class>
+		<class>com.oocl.ir4.cus.model.CustomerRelationship</class>
+		<class>com.oocl.ir4.cus.model.CustomerSegment</class>
+		<class>com.oocl.ir4.cus.model.CustomerSite</class>
+		<class>com.oocl.ir4.cus.model.FixedCreditTermSpecification</class>
+		<class>com.oocl.ir4.cus.model.Function</class>
+		<class>com.oocl.ir4.cus.model.FunctionReference</class>
+		<class>com.oocl.ir4.cus.model.FunctionalState</class>
+		<class>com.oocl.ir4.cus.model.NextQuarterDate</class>
+		<class>com.oocl.ir4.cus.model.Notification</class>
+		<class>com.oocl.ir4.cus.model.NotificationMethod</class>
+		<class>com.oocl.ir4.cus.model.PhoneNumber</class>
+		<class>com.oocl.ir4.cus.model.Regulatory</class>
+		<class>com.oocl.ir4.cus.model.SalesRepresentative</class>
+		<class>com.oocl.ir4.cus.model.SalesRepresentativeAssignment</class>
+		<class>com.oocl.ir4.cus.model.SegmentSpecification</class>
+		<class>com.oocl.ir4.cus.model.VerifierGroup</class>
+		<class>com.oocl.ir4.cus.model.VerifierGroupLocation</class>
+		<class>com.oocl.ir4.gsp.exch.model.ActionSummary</class>
+		<class>com.oocl.ir4.gsp.exch.model.CustomizedCurrencyExchangeRule</class>
+		<class>com.oocl.ir4.gsp.exch.model.ExchangeRate</class>
+		<class>com.oocl.ir4.gsp.exch.model.ExchangeRateSource</class>
+		<class>com.oocl.ir4.gsp.exch.model.ExchangeRateSourceBinding</class>
+		<class>com.oocl.ir4.gsp.geo.model.Address</class>
+		<class>com.oocl.ir4.gsp.geo.model.AddressElement</class>
+		<class>com.oocl.ir4.gsp.geo.model.AddressFormat</class>
+		<class>com.oocl.ir4.gsp.geo.model.BusinessHour</class>
+		<class>com.oocl.ir4.gsp.geo.model.Contact</class>
+		<class>com.oocl.ir4.gsp.geo.model.Country</class>
+		<class>com.oocl.ir4.gsp.geo.model.DataTag</class>
+		<class>com.oocl.ir4.gsp.geo.model.Facility</class>
+		<class>com.oocl.ir4.gsp.geo.model.GeoPoliticalUnit</class>
+		<class>com.oocl.ir4.gsp.geo.model.GeographicCode</class>
+		<class>com.oocl.ir4.gsp.geo.model.GeographicCurrency</class>
+		<class>com.oocl.ir4.gsp.geo.model.GeographicDivision</class>
+		<class>com.oocl.ir4.gsp.geo.model.GeographicEffectivity</class>
+		<class>com.oocl.ir4.gsp.geo.model.GeographicLocation</class>
+		<class>com.oocl.ir4.gsp.geo.model.GeographicName</class>
+		<class>com.oocl.ir4.gsp.geo.model.GeographicStandardCode</class>
+		<class>com.oocl.ir4.gsp.geo.model.HierarchyLevel</class>
+		<class>com.oocl.ir4.gsp.geo.model.LegacyName</class>
+		<class>com.oocl.ir4.gsp.geo.model.LogicalGroup</class>
+		<class>com.oocl.ir4.gsp.geo.model.Municipality</class>
+		<class>com.oocl.ir4.gsp.geo.model.NamedUnitType</class>
+		<class>com.oocl.ir4.gsp.geo.model.PoliticalStructure</class>
+		<class>com.oocl.ir4.gsp.geo.model.Service</class>
+		<class>com.oocl.ir4.gsp.geo.model.SharedData</class>
+		<class>com.oocl.ir4.gsp.geo.model.TimeZone</class>
+		<class>com.oocl.ir4.gsp.geo.model.TradeLaneScopeRule</class>
+		<class>com.oocl.ir4.gsp.hq.model.HighCubeConfigData</class>
+		<class>com.oocl.ir4.gsp.hq.model.HighCubeData</class>
+		<class>com.oocl.ir4.gsp.hq.model.HighCubeDataSnapshot</class>
+		<class>com.oocl.ir4.gsp.hs.model.HSCommodity</class>
+		<class>com.oocl.ir4.gsp.hs.model.OOCLCommodityGroup</class>
+		<class>com.oocl.ir4.gsp.org.model.ChangeDetail</class>
+		<class>com.oocl.ir4.gsp.org.model.ChangeHistory</class>
+		<class>com.oocl.ir4.gsp.org.model.Company</class>
+		<class>com.oocl.ir4.gsp.org.model.CompanyDetail</class>
+		<class>com.oocl.ir4.gsp.org.model.CompanyOffice</class>
+		<class>com.oocl.ir4.gsp.org.model.CompanyOfficeBusiness</class>
+		<class>com.oocl.ir4.gsp.org.model.LegacyPrintName</class>
+		<class>com.oocl.ir4.gsp.org.model.LocalLanguageValue</class>
+		<class>com.oocl.ir4.gsp.org.model.NamedUnitValue</class>
+		<class>com.oocl.ir4.gsp.org.model.Organization</class>
+		<class>com.oocl.ir4.gsp.org.model.OrganizationHierarchyNode</class>
+		<class>com.oocl.ir4.gsp.org.model.OrganizationHierarchyStructure</class>
+		<class>com.oocl.ir4.gsp.org.model.OrganizationHierarchyType</class>
+		<class>com.oocl.ir4.gsp.org.model.OrganizationUnit</class>
+		<class>com.oocl.ir4.gsp.org.model.OrganizationUnitAttribute</class>
+		<class>com.oocl.ir4.gsp.org.model.OrganizationUnitBooleanValueAttribute</class>
+		<class>com.oocl.ir4.gsp.org.model.OrganizationUnitMultipleValueAttribute</class>
+		<class>com.oocl.ir4.gsp.org.model.OrganizationUnitNamedValueAttribute</class>
+		<class>com.oocl.ir4.gsp.org.model.OrganizationUnitNumericValueAttribute</class>
+		<class>com.oocl.ir4.gsp.org.model.OrganizationUnitStringValueAttribute</class>
+		<class>com.oocl.ir4.gsp.org.model.OrganizationUnitType</class>
+		<class>com.oocl.ir4.sppm.entity.BizCoverageType</class>
+		<class>com.oocl.ir4.sppm.entity.CertificateType</class>
+		<class>com.oocl.ir4.sppm.entity.Contact</class>
+		<class>com.oocl.ir4.sppm.entity.ContactPurpose</class>
+		<class>com.oocl.ir4.sppm.entity.ContactVia</class>
+		<class>com.oocl.ir4.sppm.entity.ContactViaEmail</class>
+		<class>com.oocl.ir4.sppm.entity.ContactViaNumber</class>
+		<class>com.oocl.ir4.sppm.entity.ContactViaType</class>
+		<class>com.oocl.ir4.sppm.entity.DocumentType</class>
+		<class>com.oocl.ir4.sppm.entity.ExternalReference</class>
+		<class>com.oocl.ir4.sppm.entity.JobOrderIssuingType</class>
+		<class>com.oocl.ir4.sppm.entity.MultiLanguageData</class>
+		<class>com.oocl.ir4.sppm.entity.Payee</class>
+		<class>com.oocl.ir4.sppm.entity.PayeeContact</class>
+		<class>com.oocl.ir4.sppm.entity.PersistSupportData</class>
+		<class>com.oocl.ir4.sppm.entity.RatingType</class>
+		<class>com.oocl.ir4.sppm.entity.Supplier</class>
+		<class>com.oocl.ir4.sppm.entity.SupplierAttachmentFile</class>
+		<class>com.oocl.ir4.sppm.entity.SupplierContact</class>
+		<class>com.oocl.ir4.sppm.entity.SupplierType</class>
+		<class>com.oocl.ir4.sppm.entity.SupportDataMultiLangData</class>
+		<class>com.oocl.ir4.sppm.entity.TransportationIndicator</class>
+		<class>com.oocl.ir4.sppm.entity.VendorRoleLog</class>
+
+
+		<properties>
+			<!-- JDBC configuration -->
+
+			<!-- The following properties were entered by hand -->
+
+			<property name="eclipselink.logging.logger" value="ServerLogger" />
+			<property name="eclipselink.target-server" value="WebLogic_10" />
+			<property name="eclipselink.logging.level" value="FINE" /> <!-- PROD CONFIG -->
+			<property name="eclipselink.logging.timestamp" value="true" />
+			<property name="eclipselink.logging.thread" value="true" />
+
+			<property name="eclipselink.logging.session" value="false" />
+			<property name="eclipselink.logging.exceptions" value="false" />
+
+			<!-- suggested to remvoe by sharing with weblogic log -->
+			<!-- <property name="eclipselink.logging.file" value="%%ECLIPSELINK-LOG%%"/> -->
+
+
+			<!-- Optimize database writes to use batching. -->
+			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
+
+			<!-- Avoids flush being triggered before every query execution. -->
+			<property name="eclipselink.persistence-context.flush-mode"
+				value="COMMIT" />
+
+			<!-- Configure connection pool. -->
+			<property name="eclipselink.jdbc.read-connections.min"
+				value="4" />
+			<property name="eclipselink.jdbc.read-connections.max"
+				value="64" />
+
+			<!-- Configure cache size. -->
+			<property name="eclipselink.cache.size.default" value="1000" />
+
+			<!-- ************************************************** -->
+			<!-- Session customizer for CMN data types to avoid TLG -->
+			<!-- ************************************************** -->
+			<property name="eclipselink.session.customizer" value="com.oocl.ir4.cmn.utility.VoidCustomizer" />
+
+			<!-- property name="eclipselink.weaving.eager" value="false"/ -->
+			<!-- If desired, this option would disable caching. -->
+			<!--property name="eclipselink.weaving.internal" value="false" / -->
+			<property name="eclipselink.cache.shared.default" value="false" />
+			<!-- property name="eclipselink.cache.shared.default" value="false"/ -->
+
+			<!-- If desired, this option would force a JDBC connection to be held 
+				for the duration of an EntityManager, instead of returned to the pool in 
+				between queries/transactions. -->
+			<!-- property name="eclipselink.jdbc.exclusive-connection.mode" value="Always" 
+				/ -->
+
+			<!-- Configure database to be created on startup if not already existing. -->
+			<!-- <property name="eclipselink.ddl-generation" value="create-tables" 
+				/> -->
+
+			<!-- To drop and replace existing schema this can be used. -->
+			<!--<property name="eclipselink.ddl-generation" value="drop-and-create-tables" 
+				/> -->
+
+		</properties>
+	</persistence-unit>
+</persistence>
