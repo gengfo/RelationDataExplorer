@@ -25,10 +25,17 @@ public class EclipseLinkOutputDataToExcelTest {
 		
 		DataOutputHelper4EclipseLink.outputDataEclipseLink("ARP_Payment",
 				"pmt_oid", "1", toFileName, mappingType, persistentUnitName);
-
 		
 		
-
+		//  DataOutputHelper4EclipseLink.outputDataEclipseLink("SPS_JobOrder",
+        //      "JOB_ORDER_ID", "100004123", toFileName, mappingType, persistentUnitName);
+		
+		//SPS_JobCostItem
+		//JOB_COST_ITEM_ID
+		//DataOutputHelper4EclipseLink.outputDataEclipseLink("SPS_JobCostItem",
+		//        "JOB_COST_ITEM_ID", "100000037", toFileName, mappingType, persistentUnitName);
+		
+		
 		log.debug("Done");
 
 	}

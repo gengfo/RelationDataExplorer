@@ -512,7 +512,7 @@ public class MappingHelper {
 
 	public static String getDBFiledValueByOid(String tableName,
 			String filedName, String tablePkName, String tablePkValue) {
-		String fieldValue = null;
+		String fieldValue = "";
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -555,8 +555,11 @@ public class MappingHelper {
 
 		try {
 			// /while (rsnext()) {
-			rs.next();
-			fieldValue = rs.getString(1);
+			if (rs.next()){
+				fieldValue = rs.getString(1);	
+			}
+			
+			
 			// }
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -18,7 +18,7 @@ public class ToplinkOutputDataToExcelTest {
 		
 	
 		String toFileName = "toExcelSheetsWithData.xls";
-		MappingHelper.outputDataToplink("ARNote", "oid", "1950711", toFileName);
+		MappingHelper.outputDataToplink("ARNote", "oid", "1536", toFileName);
 
 		System.out.println("Done!");
 
