@@ -269,7 +269,7 @@ public class EclipselinkDescriptorToExcel {
 			sqlToRun = sqlToRun + keyField + " = " + keyValue;
 
 			// to remove
-			System.out.println("To run sql in showTableContent: " + sqlToRun);
+			System.out.println("To run sql in showTableContent to excel sheet : " + sqlToRun);
 			rs = stam1.executeQuery(sqlToRun);
 
 			

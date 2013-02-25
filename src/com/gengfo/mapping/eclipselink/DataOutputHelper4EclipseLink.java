@@ -68,27 +68,19 @@ public class DataOutputHelper4EclipseLink {
         try {
             stam = con.createStatement();
         } catch (SQLException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        
-        //Set<String> set = collectAllMappingKeysEclipseLink(aliasName, keyFieldName, keyFieldValue, mappingType, con, stam);
+
+        // Set<String> set = collectAllMappingKeysEclipseLink(aliasName, keyFieldName, keyFieldValue, mappingType, con,
+        // stam);
         MappingHelper.initFirstMapping(aliasName, keyFieldName, keyFieldValue);
 
         collectMoreMappingKeysEclipseLink(aliasName, keyFieldName, keyFieldValue, mappingType, con, stam);
 
         Set<String> set = DataHolder.getInstance().getHandledStatus().keySet();
-        
-        try {
-            con.close();
-            stam.close();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
 
-       // DataOutputHelper4EclipseLink.outputDataToExcelEclipseLink(set, xlsFileName);
-        
+        // DataOutputHelper4EclipseLink.outputDataToExcelEclipseLink(set, xlsFileName);
+
         Set<String> keySet = new TreeSet<String>();
         keySet.addAll(set);
 
@@ -97,8 +89,8 @@ public class DataOutputHelper4EclipseLink {
 
         keyList.addAll(keySet);
 
-       // DataOutputHelper4EclipseLink.toExcelSheetsWithDataEclipseLink(xlsFileName, keyList);
-        
+        // DataOutputHelper4EclipseLink.toExcelSheetsWithDataEclipseLink(xlsFileName, keyList);
+
         WritableWorkbook wwb = null;
 
         try {
@@ -125,7 +117,7 @@ public class DataOutputHelper4EclipseLink {
             String thealiasName = splited[0];
             RelationalDescriptor descriptor = DataHolder.getInstance().getAlias2EclipseLinkDescriptor()
                     .get(thealiasName);
-           // appendSheetContentBeanEclipseLink(wwb, descriptor, scBean);
+            // appendSheetContentBeanEclipseLink(wwb, descriptor, scBean);
             buildMappingsEclipseLink(descriptor, wwb, scBean);
 
             // // insert mapping info end
@@ -161,6 +153,14 @@ public class DataOutputHelper4EclipseLink {
             e.printStackTrace();
         }
 
+        try {
+            con.close();
+            stam.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
     }
 
     public static Set<String> collectAllMappingKeysEclipseLink(String aliasName, String keyFieldName,
@@ -179,7 +179,7 @@ public class DataOutputHelper4EclipseLink {
             String keyFieldValue, String mappingType, Connection con1, Statement stam1) {
         DataHolder handledSet = DataHolder.getInstance();
         String kOfAliasKNameKValue = MappingHelper.getKey(aliasName, keyFieldName, keyFieldValue);
-        
+
         while (null != MappingHelper.hasItemToHandle(handledSet.getHandledStatus())) {
             logger.debug("to handle-> " + kOfAliasKNameKValue);
             Boolean b = (Boolean) handledSet.getHandledStatus().get(kOfAliasKNameKValue);
@@ -283,32 +283,32 @@ public class DataOutputHelper4EclipseLink {
                     FieldPair[] fps = tableRel.getFieldPairs();
 
                     for (int i = 0; i < fps.length; i++) {
-                        //TODO
+                        // TODO
                         if (i != 0) {
                             whereClause = whereClause + " " + "and" + " ";
                         }
                         FieldPair fp = fps[i];
-                        //String fk = MappingHelper.getTableFiledValue(srcTableName, fp.getSourceFd(), keyFieldValue);
+                        // String fk = MappingHelper.getTableFiledValue(srcTableName, fp.getSourceFd(), keyFieldValue);
                         String fk = "";
                         try {
 
                             String tablePkName = MappingHelper.getTableKeyField(srcTableName);
                             String filedName = fp.getSourceFd();
-                            //String tableName = srcTableName;
-                          //  fk = MappingHelper.getDBFiledValueByOid(srcTableName, fp.getSourceFd(), tablePkName,
-                          //          keyFieldValue);
-                            //String fieldValue = "";
-                            //Connection con = null;
-                            //Statement stmt = null;
+                            // String tableName = srcTableName;
+                            // fk = MappingHelper.getDBFiledValueByOid(srcTableName, fp.getSourceFd(), tablePkName,
+                            // keyFieldValue);
+                            // String fieldValue = "";
+                            // Connection con = null;
+                            // Statement stmt = null;
                             ResultSet rs = null;
 
-                            //con = DataHolder.getInstance().getConnection();
+                            // con = DataHolder.getInstance().getConnection();
 
-                           // try {
-                                //stmt = con1.createStatement();
-                          //  } catch (SQLException e) {
-                            //    e.printStackTrace();
-                          //  }
+                            // try {
+                            // stmt = con1.createStatement();
+                            // } catch (SQLException e) {
+                            // e.printStackTrace();
+                            // }
 
                             String sqlToRun = "SELECT ";
                             sqlToRun = sqlToRun + filedName;
@@ -340,33 +340,32 @@ public class DataOutputHelper4EclipseLink {
                                 e.printStackTrace();
                             }
 
-//                            try {
-//                               // stmt.close();
-//                                //con.close();
-//                            } catch (SQLException e) {
-//                                e.printStackTrace();
-//                            }
+                            // try {
+                            // // stmt.close();
+                            // //con.close();
+                            // } catch (SQLException e) {
+                            // e.printStackTrace();
+                            // }
 
-                            
-                            ////
+                            // //
 
                         } catch (MultiKeyFieldException e) {
                             e.printStackTrace();
                         }
-                        
-                        ///
+
+                        // /
                         if (!StringUtils.isEmpty(fk)) {
                             whereClause = whereClause + fp.getDestinationFd() + "=" + fk;
                         }
                     }
 
-                   // List<String> fkValueList = MappingHelper.getTableContent(tableRel.getDestTbName(), whereClause);
+                    // List<String> fkValueList = MappingHelper.getTableContent(tableRel.getDestTbName(), whereClause);
                     List<String> fkValueList = new Vector();
 
                     try {
-                        //con = DataHolder.getInstance().getConnection();
+                        // con = DataHolder.getInstance().getConnection();
 
-                        //stmt = con.createStatement();
+                        // stmt = con.createStatement();
 
                         String sqlToRun = "SELECT * FROM ";
                         sqlToRun = sqlToRun + tableRel.getDestTbName();
@@ -393,16 +392,16 @@ public class DataOutputHelper4EclipseLink {
                     } catch (Exception e) {
 
                     } finally {
-//                        try {
-//                            stmt.close();
-//
-//                            con.close();
-//                        } catch (SQLException e) {
-//                            e.printStackTrace();
-//                        }
+                        // try {
+                        // stmt.close();
+                        //
+                        // con.close();
+                        // } catch (SQLException e) {
+                        // e.printStackTrace();
+                        // }
                     }
-                    
-                    ///
+
+                    // /
 
                     if (null != fkValueList && fkValueList.size() > 0) {
                         for (String akey : fkValueList) {

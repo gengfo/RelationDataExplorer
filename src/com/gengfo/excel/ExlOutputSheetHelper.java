@@ -72,36 +72,36 @@ public class ExlOutputSheetHelper {
 	}
 
 	public static void fillSheetWithLables(WritableSheet ws, List lableList) {
-		logger.info("enter fillSheetWithLables for sheet " + ws.getName());
+		//logger.info("enter fillSheetWithLables for sheet " + ws.getName());
 		if (null == ws || null == lableList || lableList.size() == 0) {
-			logger.info("labble list is null in in " + ws.getName());
+			//logger.info("labble list is null in in " + ws.getName());
 			return;
 		}
 
 		for (int i = 0; i < lableList.size(); i++) {
 			try {
 				ws.addCell((Label) lableList.get(i));
-				logger.info("add cell in lablelist " + i);
+				//logger.info("add cell in lablelist " + i);
 			} catch (RowsExceededException e) {
 				e.printStackTrace();
 			} catch (WriteException e) {
 				e.printStackTrace();
 			}
 		}
-		logger.info("exit fillSheetWithLables for sheet " + ws.getName());
+		//logger.info("exit fillSheetWithLables for sheet " + ws.getName());
 	}
 
 	public static void fillSheetWithLinks(WritableSheet ws, List linkList) {
-		logger.info("enter fillSheetWithLinks for sheet " + ws.getName());
+		//logger.info("enter fillSheetWithLinks for sheet " + ws.getName());
 		if (null == ws || null == linkList || linkList.size() == 0) {
-			logger.info("Link list is null in " + ws.getName());
+			//logger.info("Link list is null in " + ws.getName());
 			return;
 		}
 
 		for (int i = 0; i < linkList.size(); i++) {
 			try {
 				ws.addHyperlink((WritableHyperlink) linkList.get(i));
-				logger.info("add link in linklist " + i);
+				//logger.info("add link in linklist " + i);
 			} catch (RowsExceededException e) {
 				e.printStackTrace();
 			} catch (WriteException e) {
@@ -109,7 +109,7 @@ public class ExlOutputSheetHelper {
 			}
 		}
 
-		logger.info("exit fillSheetWithLinks for sheet " + ws.getName());
+		//logger.info("exit fillSheetWithLinks for sheet " + ws.getName());
 	}
 
 	public static void main(String args[]) {
