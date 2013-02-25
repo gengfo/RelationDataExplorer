@@ -79,12 +79,12 @@ public class EclipselinkDescriptorToExcel {
 	}
 
 	public static SheetContentBean toSheetContentBeanWithData(
-			WritableWorkbook wwb, String key) {
+			WritableWorkbook wwb, String key, Connection con, Statement stm) {
 		SheetContentBean scBean = new SheetContentBean();
 
 		buildHeaderCellBeansWithData(key, scBean);
 
-		buildData(key, wwb, scBean);
+		buildData(key, wwb, scBean, con, stm);
 
 		return scBean;
 	}
@@ -238,10 +238,10 @@ public class EclipselinkDescriptorToExcel {
 
 
 	public static void buildData(String key, WritableWorkbook wwb,
-			SheetContentBean scBean) {
+			SheetContentBean scBean, Connection con1, Statement stam1) {
 
-		Connection con = null;
-		Statement stmt = null;
+		//Connection con = null;
+		//Statement stmt = null;
 		ResultSet rs = null;
 		//StringBuffer sb = new StringBuffer();
 
@@ -259,9 +259,9 @@ public class EclipselinkDescriptorToExcel {
 
 		try {
 			//con = MappingHelper.getConnectionIps();
-			con = DataHolder.getInstance().getConnection();
+			//con = DataHolder.getInstance().getConnection();
 			
-			stmt = con.createStatement();
+			//stmt = con.createStatement();
 
 			String sqlToRun = "SELECT * FROM ";
 			sqlToRun = sqlToRun + tableName;
@@ -270,7 +270,7 @@ public class EclipselinkDescriptorToExcel {
 
 			// to remove
 			System.out.println("To run sql in showTableContent: " + sqlToRun);
-			rs = stmt.executeQuery(sqlToRun);
+			rs = stam1.executeQuery(sqlToRun);
 
 			
 			int row = 0;
@@ -309,15 +309,15 @@ public class EclipselinkDescriptorToExcel {
 		} catch (Exception e) {
 
 		} finally {
-			try {
-				stmt.close();
-				con.close();
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
-			stmt = null;
-			con = null;
+//			try {
+//				stmt.close();
+//				con.close();
+//			} catch (SQLException e) {
+//
+//				e.printStackTrace();
+//			}
+//			stmt = null;
+//			con = null;
 		}
 
 		// to list table data
@@ -822,7 +822,7 @@ public class EclipselinkDescriptorToExcel {
 			String key = keyList.get(s);
 
 			SheetContentBean scBean = EclipselinkDescriptorToExcel
-					.toSheetContentBeanWithData(wwb, key);
+					.toSheetContentBeanWithData(wwb, key, null, null);
 			
 			// insert mapping info
 			String splited[] = key.split("-");
