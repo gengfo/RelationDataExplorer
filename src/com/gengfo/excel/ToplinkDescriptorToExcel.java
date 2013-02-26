@@ -33,8 +33,10 @@ import org.apache.log4j.Logger;
 
 import com.gengfo.common.CommonConstants;
 import com.gengfo.mapping.toplink.ToplinkMappingHelper;
-import com.gengfo.mapping.utils.DataHolder;
 import com.gengfo.mapping.utils.MappingHelper;
+import com.gengfo.or.common.DataHolder;
+import com.gengfo.or.common.ExlOutputSheetHelper;
+import com.gengfo.or.common.WritableWorkbookFactory;
 
 public class ToplinkDescriptorToExcel {
 

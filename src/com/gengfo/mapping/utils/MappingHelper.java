@@ -29,6 +29,9 @@ import com.gengfo.mapping.eclipselink.DataOutputHelper4EclipseLink;
 import com.gengfo.mapping.toplink.TableRel;
 import com.gengfo.mapping.toplink.ToplinkMappingHelper;
 import com.gengfo.mapping.toplink.ToplinkProjectManual;
+import com.gengfo.or.OR4ToplinkHelper;
+import com.gengfo.or.common.CommonUtils;
+import com.gengfo.or.common.DataHolder;
 
 public class MappingHelper {
 
@@ -584,18 +587,6 @@ public class MappingHelper {
         return aliasName + "-" + mappingKey.toUpperCase() + "-" + keyValue;
     }
 
-    public static void moveToHandled(String aliasName, String mappingKey, String oid) {
-
-        String key = getKey(aliasName, mappingKey, oid);
-
-        // DataHolder.getInstance().getToHandledMappings().remove(key);
-        // DataHolder.getInstance().getHandledMappings()
-        // .add(getKey(aliasName, mappingKey, oid));
-
-        DataHolder.getInstance().getHandledStatus().put(getKey(aliasName, mappingKey, oid), Boolean.TRUE);
-
-    }
-
     public static void initFirstMapping(String aliasName, String mappingKey, String oid) {
 
         DataHolder handledSet = DataHolder.getInstance();
@@ -703,16 +694,6 @@ public class MappingHelper {
         return whereClause;
     }
 
-    public static void outputDataToplink(String aliasName, String key, String oid, String xlsFileName) {
-
-        ToplinkMappingHelper.initDataHoderToplink();
-
-        Set<String> set = collectAllMappingKeys(aliasName, key, oid);
-
-        outputDataToExcel(set, xlsFileName);
-
-    }
-
     public static void outputDataToExcel(Set<String> set, String xlsFileName) {
 
         Set<String> keySet = new TreeSet<String>();
@@ -754,7 +735,7 @@ public class MappingHelper {
 
             if (!b.booleanValue()) {
 
-                moveToHandled(aliasName, key, oid);
+                CommonUtils.moveToHandled(aliasName, key, oid);
 
                 List<TableRel> tableOwnList = ToplinkMappingHelper
                         .getTabbleRels(handledSet.getProject(), aliasName);
@@ -868,7 +849,7 @@ public class MappingHelper {
         String tableName = DBConstants.TB_AR_INV_CHG_POOL;
         String tbOid = "20218";
         MappingHelper.retrieveSingleTableContent(tableName, null, tbOid);
-        outputDataToplink(tableName, null, tbOid, null);
+        OR4ToplinkHelper.outputDataToplink(tableName, null, tbOid, null);
 
         System.out.println("Done!");
 

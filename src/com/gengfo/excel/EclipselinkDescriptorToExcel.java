@@ -2,8 +2,6 @@ package com.gengfo.excel;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
@@ -40,8 +38,11 @@ import org.eclipse.persistence.mappings.OneToOneMapping;
 
 import com.gengfo.common.CommonConstants;
 import com.gengfo.mapping.toplink.ToplinkMappingHelper;
-import com.gengfo.mapping.utils.DataHolder;
 import com.gengfo.mapping.utils.MappingHelper;
+import com.gengfo.or.OR4EclipselinkHelper;
+import com.gengfo.or.common.DataHolder;
+import com.gengfo.or.common.ExlOutputSheetHelper;
+import com.gengfo.or.common.WritableWorkbookFactory;
 
 public class EclipselinkDescriptorToExcel {
 
@@ -84,7 +85,7 @@ public class EclipselinkDescriptorToExcel {
 
 		buildHeaderCellBeansWithData(key, scBean);
 
-		buildData(key, wwb, scBean, con, stm);
+		OR4EclipselinkHelper.buildData(key, wwb, scBean, con, stm);
 
 		return scBean;
 	}
@@ -236,93 +237,6 @@ public class EclipselinkDescriptorToExcel {
 		}
 	}
 
-
-	public static void buildData(String key, WritableWorkbook wwb,
-			SheetContentBean scBean, Connection con1, Statement stam1) {
-
-		//Connection con = null;
-		//Statement stmt = null;
-		ResultSet rs = null;
-		//StringBuffer sb = new StringBuffer();
-
-		String splited[] = key.split("-");
-		String aliasName = splited[0];
-		//String tableName = ToplinkProjectHelper.getAliasTableNameMap().get(
-		//		aliasName);
-		String tableName = DataHolder.getInstance().getAlias2TableMap().get(
-						aliasName);
-				
-		String keyField = splited[1];
-		String keyValue = splited[2];
-
-		List<String> resultList = new Vector();
-
-		try {
-			//con = MappingHelper.getConnectionIps();
-			//con = DataHolder.getInstance().getConnection();
-			
-			//stmt = con.createStatement();
-
-			String sqlToRun = "SELECT * FROM ";
-			sqlToRun = sqlToRun + tableName;
-			sqlToRun = sqlToRun + " WHERE ";
-			sqlToRun = sqlToRun + keyField + " = " + keyValue;
-
-			// to remove
-			System.out.println("To run sql in showTableContent to excel sheet : " + sqlToRun);
-			rs = stam1.executeQuery(sqlToRun);
-
-			
-			int row = 0;
-
-			int initPositionLine = 5;
-			int initPositionColumn = 8;
-
-			int postionLine = initPositionLine;
-
-			while (rs.next()) {
-
-				row = row + 1;
-
-				
-
-				ResultSetMetaData rsmd = rs.getMetaData();
-				for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-					String columnName = rsmd.getColumnLabel(i);
-
-					CellBean cbFieldName = new CellBean();
-					cbFieldName.setCellConent(columnName);
-					cbFieldName.setPosition(new Position(initPositionColumn, postionLine));
-					scBean.getCellBeanList().add(cbFieldName);
-
-					String fieldValue = rs.getString(i);
-
-					CellBean cbFieldValue = new CellBean();
-					cbFieldValue.setCellConent(fieldValue);
-					cbFieldValue.setPosition(new Position(initPositionColumn+1, postionLine));
-					scBean.getCellBeanList().add(cbFieldValue);
-
-					postionLine = postionLine + 1;
-
-				}
-			}
-		} catch (Exception e) {
-
-		} finally {
-//			try {
-//				stmt.close();
-//				con.close();
-//			} catch (SQLException e) {
-//
-//				e.printStackTrace();
-//			}
-//			stmt = null;
-//			con = null;
-		}
-
-		// to list table data
-
-	}
 
 	public static void handleOneToOneMapping(DatabaseMapping map,
 			WritableWorkbook wwb, SheetContentBean scBean, int i) {

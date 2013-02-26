@@ -1,4 +1,4 @@
-package com.gengfo.excel;
+package com.gengfo.or.common;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,6 +11,10 @@ import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
 import org.apache.log4j.Logger;
+
+import com.gengfo.excel.SheetContentBean;
+import com.gengfo.excel.SheetContentBeanGenerator;
+import com.gengfo.excel.WritableSheetFactory;
 
 public class ExlOutputSheetHelper {
 
@@ -32,7 +36,6 @@ public class ExlOutputSheetHelper {
 
 	}
 
-	// TODO: to remove sheet name
 	public static void fillSheet(WritableWorkbook workbook,
 			SheetContentBean scBean) {
 		logger.info("to fill sheet: " + scBean.getSheetName());
@@ -40,21 +43,7 @@ public class ExlOutputSheetHelper {
 				.getSheetName());
 
 		fillSheet(sheet, scBean);
-
-		// this line can't ommit
-		// try {
-		// workbook.write();
-		//			
-		// workbook.close();
-		//			
-		// logger.info("write to workbook " + workbook.toString());
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// } catch (WriteException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-
+		
 	}
 
 	public static void fillSheet(WritableSheet sheet, SheetContentBean scBean) {

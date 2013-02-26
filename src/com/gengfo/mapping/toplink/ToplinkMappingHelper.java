@@ -27,13 +27,12 @@ import oracle.toplink.publicinterface.Descriptor;
 import oracle.toplink.sessions.Project;
 import oracle.toplink.tools.workbench.XMLProjectReader;
 
-import com.gengfo.common.CommonConstants;
 import com.gengfo.exception.MultiKeyFieldException;
 import com.gengfo.mapping.eclipselink.EclipseLinkMappingHelper;
 import com.gengfo.mapping.utils.DBConstants;
-import com.gengfo.mapping.utils.DataHolder;
 import com.gengfo.mapping.utils.FieldPair;
 import com.gengfo.mapping.utils.MappingHelper;
+import com.gengfo.or.common.DataHolder;
 import com.oocl.ivo.domain.mapping.IVOProject;
 
 public class ToplinkMappingHelper {
@@ -129,25 +128,6 @@ public class ToplinkMappingHelper {
 		}
 
 		return tableKeyMap;
-	}
-
-	public static void initDataHoderToplink() {
-
-		Map<String, String> alias2TableMap = getAliasTableNameMapToplink();
-		DataHolder.getInstance().getAlias2TableMap().putAll(alias2TableMap);
-
-		Map<String, String> table2AliasMap = getTableNameAliasMapToplink();
-		DataHolder.getInstance().getTable2AliasMap().putAll(table2AliasMap);
-
-		Map<String, Descriptor> alias2Descriptor = getAliasDescriptorMapToplink();
-		DataHolder.getInstance().getAlias2Descriptor().putAll(alias2Descriptor);
-
-		Map<String, String> table2Pk = getTablePKeyMapToplink();
-		DataHolder.getInstance().getTablePkMap().putAll(table2Pk);
-		
-		DataHolder.getInstance().setMappingType(CommonConstants.MAPPING_TYPE_TOPLINK);
-
-
 	}
 
 	public static Map<String, Descriptor> getAliasDescriptorMapToplink() {

@@ -1,4 +1,4 @@
-package com.gengfo.mapping.utils;
+package com.gengfo.or.common;
 
 import java.sql.Connection;
 import java.util.HashMap;
@@ -18,6 +18,7 @@ import oracle.toplink.publicinterface.Descriptor;
 import oracle.toplink.sessions.Project;
 
 import com.gengfo.common.CommonConstants;
+import com.gengfo.mapping.utils.MappingHelper;
 import com.oocl.ivo.domain.mapping.IVOProject;
 
 public class DataHolder {

@@ -15,12 +15,12 @@ import org.apache.log4j.Logger;
 import com.gengfo.excel.CellBean;
 import com.gengfo.excel.ToplinkDescriptorToExcel;
 import com.gengfo.excel.EclipselinkDescriptorToExcel;
-import com.gengfo.excel.ExlOutputSheetHelper;
 import com.gengfo.excel.Position;
 import com.gengfo.excel.SheetBaseTestCase;
 import com.gengfo.excel.SheetContentBean;
-import com.gengfo.excel.WritableWorkbookFactory;
 import com.gengfo.mapping.toplink.ToplinkMappingHelper;
+import com.gengfo.or.common.ExlOutputSheetHelper;
+import com.gengfo.or.common.WritableWorkbookFactory;
 
 
 public class DescriptorToExcelTest extends SheetBaseTestCase {

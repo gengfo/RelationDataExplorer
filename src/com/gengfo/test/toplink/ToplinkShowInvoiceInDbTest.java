@@ -2,6 +2,7 @@ package com.gengfo.test.toplink;
 
 import com.gengfo.mapping.utils.DBConstants;
 import com.gengfo.mapping.utils.MappingHelper;
+import com.gengfo.or.OR4ToplinkHelper;
 
 
 
@@ -29,7 +30,7 @@ public class ToplinkShowInvoiceInDbTest {
 		
 		//DBHelperR0202.retrieveSingleTableContent(theTableName, "oid", tbOid);
 
-		MappingHelper.outputDataToplink(theDescriptorName, "oid", tbOid, null);
+		OR4ToplinkHelper.outputDataToplink(theDescriptorName, "oid", tbOid, null);
 
 		System.out.println("Done!");
 
