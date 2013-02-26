@@ -71,15 +71,11 @@ public class DataOutputHelper4EclipseLink {
             e1.printStackTrace();
         }
 
-        // Set<String> set = collectAllMappingKeysEclipseLink(aliasName, keyFieldName, keyFieldValue, mappingType, con,
-        // stam);
         MappingHelper.initFirstMapping(aliasName, keyFieldName, keyFieldValue);
 
         collectMoreMappingKeysEclipseLink(aliasName, keyFieldName, keyFieldValue, mappingType, con, stam);
 
         Set<String> set = DataHolder.getInstance().getHandledStatus().keySet();
-
-        // DataOutputHelper4EclipseLink.outputDataToExcelEclipseLink(set, xlsFileName);
 
         Set<String> keySet = new TreeSet<String>();
         keySet.addAll(set);
@@ -88,8 +84,6 @@ public class DataOutputHelper4EclipseLink {
         List<String> keyList = new ArrayList<String>();
 
         keyList.addAll(keySet);
-
-        // DataOutputHelper4EclipseLink.toExcelSheetsWithDataEclipseLink(xlsFileName, keyList);
 
         WritableWorkbook wwb = null;
 
@@ -100,27 +94,18 @@ public class DataOutputHelper4EclipseLink {
         }
 
         SheetContentBean scBeanAll = new SheetContentBean();
-        // scBeanAll
-
         int i = 0;
-
         int x = 1;
         int rowCnt = 40;
         for (int s = 0; s < keyList.size(); s++) {
-
             String key = keyList.get(s);
-
             SheetContentBean scBean = EclipselinkDescriptorToExcel.toSheetContentBeanWithData(wwb, key, con, stam);
-
-            // insert mapping info
             String splited[] = key.split("-");
             String thealiasName = splited[0];
             RelationalDescriptor descriptor = DataHolder.getInstance().getAlias2EclipseLinkDescriptor()
                     .get(thealiasName);
             // appendSheetContentBeanEclipseLink(wwb, descriptor, scBean);
             buildMappingsEclipseLink(descriptor, wwb, scBean);
-
-            // // insert mapping info end
 
             ExlOutputSheetHelper.fillSheet(wwb, scBean);
 
@@ -133,7 +118,6 @@ public class DataOutputHelper4EclipseLink {
                 i = 0;
                 x = x + 2;
             }
-
             cb.linkTo(wwb, scBean.getSheetName(), null);
             scBeanAll.cellsList.add(cb);
             scBeanAll.setSheetName("AllAlias");
@@ -152,15 +136,12 @@ public class DataOutputHelper4EclipseLink {
 
             e.printStackTrace();
         }
-
         try {
             con.close();
             stam.close();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
 
     public static Set<String> collectAllMappingKeysEclipseLink(String aliasName, String keyFieldName,
@@ -199,6 +180,8 @@ public class DataOutputHelper4EclipseLink {
                     DatabaseMapping rm = (DatabaseMapping) mapList.get(i);
                     if (rm instanceof DirectToFieldMapping) {
                     } else if (rm instanceof OneToOneMapping) {
+                        logger.debug("one to one");
+
                         OneToOneMapping oom = (OneToOneMapping) mapList.get(i);
                         Map keysMap = oom.getSourceToTargetKeyFields();
                         Set keyset = keysMap.keySet();
@@ -230,7 +213,7 @@ public class DataOutputHelper4EclipseLink {
                         }
                         tableRelList.add(tr);
                     } else if (rm instanceof OneToManyMapping) {
-
+                        logger.debug("one to many");
                         OneToManyMapping omm = (OneToManyMapping) mapList.get(i);
                         List srcKeysList = omm.getSourceKeyFields();
                         List destKeyList = omm.getTargetForeignKeyFields();
@@ -261,11 +244,12 @@ public class DataOutputHelper4EclipseLink {
 
                     } else if (rm instanceof ManyToManyMapping) {
                         logger.debug("many to many");
+
                     }
                 }
 
                 for (TableRel tableRel : tableRelList) {
-                    if (!aliasName.contains("ARP_") && !aliasName.contains("SPS_")) {
+                    if (!aliasName.contains("ARP_") && !aliasName.contains("SPS_") && !aliasName.contains("CMN_")) {
                         continue;
                     }
 
@@ -279,6 +263,12 @@ public class DataOutputHelper4EclipseLink {
                     if (!StringUtils.isEmpty(MappingHelper.schemaNameArp)) {
                         srcTableName = MappingHelper.schemaNameArp + "." + srcTableName;
                     }
+                    // if (aliasName.contains("CMN_")) {
+                    // srcTableName = MappingHelper.schemaNameIr4 + "." + srcTableName;
+                    // }
+                    // if (aliasName.contains("SPS_")) {
+                    // srcTableName = MappingHelper.schemaNameSps + "." + srcTableName;
+                    // }
 
                     FieldPair[] fps = tableRel.getFieldPairs();
 

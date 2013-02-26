@@ -31,8 +31,12 @@ public class EclipseLinkOutputDataToExcelTest {
 
         // SPS_JobCostItem
         // JOB_COST_ITEM_ID
-         DataOutputHelper4EclipseLink.outputDataEclipseLink("SPS_JobCostItem",
-         "JOB_COST_ITEM_ID", "100000037", toFileName, mappingType, persistentUnitName);
+         //DataOutputHelper4EclipseLink.outputDataEclipseLink("SPS_JobCostItem",
+         //"JOB_COST_ITEM_ID", "100000037", toFileName, mappingType, persistentUnitName);
+        
+        
+        DataOutputHelper4EclipseLink.outputDataEclipseLink("ARP_InvoiceMatchItem",
+        "MATCH_ITEM_OID", "5461", toFileName, mappingType, persistentUnitName);
 
         long endTime = System.currentTimeMillis();
         log.debug("Done in " + (endTime - startTime) / 1000 + " seconds");

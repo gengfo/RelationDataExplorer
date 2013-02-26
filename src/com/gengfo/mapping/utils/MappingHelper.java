@@ -48,6 +48,11 @@ public class MappingHelper {
 
     // public static String schemaNameArp = "ARPOWNER"; // SIT,DEV,PRE,PRD,UAT
     public static String schemaNameArp = ""; // SIT,DEV,PRE,PRD,UAT
+    
+    public static String schemaNameIr4 = "IR4_IN"; // SIT,DEV,PRE,PRD,UAT
+    
+    public static String schemaNameSps = "SPS_IN"; // SIT,DEV,PRE,PRD,UAT
+    
 
     // public static String tabelePreIps = schemaNameIps + "."; //
     // SIT,DEV,PRE,PRD,UAT
