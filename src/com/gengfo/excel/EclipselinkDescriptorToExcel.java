@@ -817,12 +817,25 @@ public class EclipselinkDescriptorToExcel {
 
 		int x = 1;
 		int rowCnt = 40;
+		
+		
+		Connection  con = DataHolder.getInstance().getConnection();
+		 Statement stmt =null;
+          try {
+             stmt = con.createStatement();
+        } catch (SQLException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
 		for (int s = 0; s < keyList.size(); s++) {
 
 			String key = keyList.get(s);
+			
+			
+			
 
 			SheetContentBean scBean = EclipselinkDescriptorToExcel
-					.toSheetContentBeanWithData(wwb, key, null, null);
+					.toSheetContentBeanWithData(wwb, key, con, stmt);
 			
 			// insert mapping info
 			String splited[] = key.split("-");
