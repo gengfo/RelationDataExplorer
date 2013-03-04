@@ -32,6 +32,7 @@ import com.gengfo.mapping.eclipselink.EclipseLinkMappingHelper;
 import com.gengfo.mapping.utils.DBConstants;
 import com.gengfo.mapping.utils.FieldPair;
 import com.gengfo.mapping.utils.MappingHelper;
+import com.gengfo.or.OR4ToplinkHelper;
 import com.gengfo.or.common.DataHolder;
 import com.oocl.ivo.domain.mapping.IVOProject;
 
@@ -40,12 +41,6 @@ public class ToplinkMappingHelper {
 	public static Project getProject(String projectXml) {
 
 		return XMLProjectReader.read(projectXml);
-
-	}
-
-	public static Project getProject() {
-
-		return new IVOProject();
 
 	}
 
@@ -76,7 +71,7 @@ public class ToplinkMappingHelper {
 		Map<String, String> tableKeyMap = new HashMap();
 
 		// Project theProject = getProject(DBConstants.PRJ_CONF_XML);
-		Project theProject = getProject();
+		Project theProject = OR4ToplinkHelper.getIVOProject();
 
 		Map aliasDescMap = theProject.getAliasDescriptors();
 		Set keySet = aliasDescMap.keySet();
@@ -105,7 +100,7 @@ public class ToplinkMappingHelper {
 		Map<String, String> tableKeyMap = new Hashtable();
 
 		// Project theProject = getProject(DBConstants.PRJ_CONF_XML);
-		Project theProject = getProject();
+		Project theProject = OR4ToplinkHelper.getIVOProject();
 
 		Map aliasDescMap = theProject.getAliasDescriptors();
 		Set keySet = aliasDescMap.keySet();
@@ -148,34 +143,6 @@ public class ToplinkMappingHelper {
 		// DataHolder.getInstance().getAlias2Descriptor().putAll(aliasDescMap);
 
 		return aliasDescMap;
-	}
-
-	public static Map<String, String> getAliasTableNameMapToplink() {
-		Map<String, String> tableKeyMap = new Hashtable();
-
-		Project theProject = getProject();
-
-		Map aliasDescMap = theProject.getAliasDescriptors();
-		Set keySet = aliasDescMap.keySet();
-		Iterator keySetIt = keySet.iterator();
-
-		while (keySetIt.hasNext()) {
-			String tableName = (String) keySetIt.next();
-			RelationalDescriptor rd = (RelationalDescriptor) aliasDescMap
-					.get(tableName);
-
-			List pkList = rd.getPrimaryKeyFields();
-			if (pkList.size() == 1) {
-				DatabaseField pk = (DatabaseField) pkList.get(0);
-
-				tableKeyMap.put(rd.getAlias(), rd.getTableName());
-			} else {
-				// throw (new MultiKeyFieldException());
-			}
-
-		}
-
-		return tableKeyMap;
 	}
 
 	public static RelationalDescriptor filterRelationalDescriptor(
@@ -297,7 +264,7 @@ public class ToplinkMappingHelper {
 
 		// --
 		// Project theProject = getProject(DBConstants.PRJ_CONF_XML);
-		Project theProject = getProject();
+		Project theProject = OR4ToplinkHelper.getIVOProject();
 
 		Map aliasDescMap = theProject.getAliasDescriptors();
 		Set keySet = aliasDescMap.keySet();

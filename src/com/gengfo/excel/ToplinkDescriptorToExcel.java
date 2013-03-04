@@ -32,8 +32,8 @@ import oracle.toplink.sessions.Project;
 import org.apache.log4j.Logger;
 
 import com.gengfo.common.CommonConstants;
-import com.gengfo.mapping.toplink.ToplinkMappingHelper;
 import com.gengfo.mapping.utils.MappingHelper;
+import com.gengfo.or.OR4ToplinkHelper;
 import com.gengfo.or.common.DataHolder;
 import com.gengfo.or.common.ExlOutputSheetHelper;
 import com.gengfo.or.common.WritableWorkbookFactory;
@@ -166,7 +166,7 @@ public class ToplinkDescriptorToExcel {
 
 		String splited[] = key.split("-");
 		String aliasName = splited[0];
-		String tableName = ToplinkMappingHelper.getAliasTableNameMapToplink().get(
+		String tableName = OR4ToplinkHelper.getToplinkAliasTableNameMaps().get(
 				aliasName);
 		String keyField = splited[1];
 		String keyValue = splited[2];

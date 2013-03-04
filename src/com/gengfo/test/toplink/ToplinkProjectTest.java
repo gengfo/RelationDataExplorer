@@ -9,6 +9,7 @@ import com.gengfo.mapping.toplink.TableRel;
 import com.gengfo.mapping.toplink.ToplinkMappingHelper;
 import com.gengfo.mapping.toplink.ToplinkProjectManual;
 import com.gengfo.mapping.utils.DBConstants;
+import com.gengfo.or.OR4ToplinkHelper;
 
 import junit.framework.TestCase;
 import oracle.toplink.sessions.Project;
@@ -19,7 +20,7 @@ public class ToplinkProjectTest extends TestCase {
 
 	protected void setUp() {
 		
-		theProject = ToplinkMappingHelper.getProject();
+		theProject = OR4ToplinkHelper.getIVOProject();
 		
 	}
 
