@@ -40,7 +40,7 @@ import com.gengfo.excel.SheetContentBean;
 import com.gengfo.mapping.toplink.TableRel;
 import com.gengfo.mapping.utils.DBConstants;
 import com.gengfo.mapping.utils.FieldPair;
-import com.gengfo.mapping.utils.MappingHelper;
+import com.gengfo.mapping.utils.CommonMappingHelper;
 import com.gengfo.or.OR4EclipselinkHelper;
 import com.gengfo.or.common.DataHolder;
 import com.gengfo.or.common.ExlOutputSheetHelper;
@@ -53,7 +53,7 @@ public class DataOutputHelper4EclipseLink {
     public static Set<String> collectAllMappingKeysEclipseLink(String aliasName, String keyFieldName,
             String keyFieldValue, String mappingType, Connection con, Statement stam1) {
 
-        MappingHelper.initFirstMapping(aliasName, keyFieldName, keyFieldValue);
+        CommonMappingHelper.initFirstMapping(aliasName, keyFieldName, keyFieldValue);
 
         OR4EclipselinkHelper.collectMoreMappingKeysEclipseLink(aliasName, keyFieldName, keyFieldValue, mappingType, con, null);
 

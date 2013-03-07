@@ -50,7 +50,7 @@ import com.gengfo.mapping.eclipselink.DataOutputHelper4EclipseLink;
 import com.gengfo.mapping.toplink.TableRel;
 import com.gengfo.mapping.utils.DBConstants;
 import com.gengfo.mapping.utils.FieldPair;
-import com.gengfo.mapping.utils.MappingHelper;
+import com.gengfo.mapping.utils.CommonMappingHelper;
 import com.gengfo.or.common.CommonUtils;
 import com.gengfo.or.common.DataHolder;
 import com.gengfo.or.common.ExlOutputSheetHelper;
@@ -291,7 +291,7 @@ public class OR4EclipselinkHelper {
         
         String kOfAliasKNameKValue = CommonUtils.getKey(aliasName, keyFieldName, keyFieldValue);
     
-        while (null != MappingHelper.hasItemToHandle(handledSet.getHandledStatus())) {
+        while (null != CommonMappingHelper.hasItemToHandle(handledSet.getHandledStatus())) {
             logger.debug("to handle-> " + kOfAliasKNameKValue);
             Boolean b = (Boolean) handledSet.getHandledStatus().get(kOfAliasKNameKValue);
             String splited[] = kOfAliasKNameKValue.split("-");
@@ -392,8 +392,8 @@ public class OR4EclipselinkHelper {
     
                     String srcTableName = tableRel.getSourceTbName();
     
-                    if (!StringUtils.isEmpty(MappingHelper.schemaNameArp)) {
-                        srcTableName = MappingHelper.schemaNameArp + "." + srcTableName;
+                    if (!StringUtils.isEmpty(CommonMappingHelper.schemaNameArp)) {
+                        srcTableName = CommonMappingHelper.schemaNameArp + "." + srcTableName;
                     }
                    
     
@@ -409,7 +409,7 @@ public class OR4EclipselinkHelper {
                         String fk = "";
                         try {
     
-                            String tablePkName = MappingHelper.getTableKeyField(srcTableName);
+                            String tablePkName = CommonUtils.getTableKeyField(srcTableName);
                             String filedName = fp.getSourceFd();
                         
                             ResultSet rs = null;
@@ -506,7 +506,7 @@ public class OR4EclipselinkHelper {
                             String tmpAlias = "";
                             Map tm = DataHolder.getInstance().getTable2AliasMap();
                             tmpAlias = (String) tm.get(tableRel.getDestTbName());
-                            String keyOfAliasKfNameKfValue = MappingHelper.getKey(tmpAlias,
+                            String keyOfAliasKfNameKfValue = CommonMappingHelper.getKey(tmpAlias,
                                     tableRel.getFieldPairs()[0].getDestinationFd(), akey);
                             boolean hasflag = false;
                             Map mapOfStatus = DataHolder.getInstance().getHandledStatus();
@@ -536,7 +536,7 @@ public class OR4EclipselinkHelper {
             } else {
             }
     
-            String asetky = MappingHelper.hasItemToHandle(handledSet.getHandledStatus());
+            String asetky = CommonMappingHelper.hasItemToHandle(handledSet.getHandledStatus());
             if (null != asetky) {
                 kOfAliasKNameKValue = asetky;
             }

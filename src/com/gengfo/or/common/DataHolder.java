@@ -18,15 +18,19 @@ import oracle.toplink.publicinterface.Descriptor;
 import oracle.toplink.sessions.Project;
 
 import com.gengfo.common.CommonConstants;
-import com.gengfo.mapping.utils.MappingHelper;
+import com.gengfo.mapping.utils.CommonMappingHelper;
 import com.oocl.ivo.domain.mapping.IVOProject;
 
 public class DataHolder {
 
 	// key already handled
 	private Map<String, String> alias2TableMap = new HashMap<String, String>();
+	
+	private Map<String, String> class2AliasMap = new HashMap<String, String>();
 
 	private Map<String, String> table2AliasMap = new HashMap<String, String>();
+	
+	
 
 	private Map<String, String> tablePkMap = new HashMap<String, String>();
 	
@@ -47,7 +51,7 @@ public class DataHolder {
 		if (CommonConstants.MAPPING_TYPE_TOPLINK.equals(mappingType)) {
 			Connection connection = null;
 			// connection = DataHolder.getInstance().getConnection();
-			connection = MappingHelper.getConnectionIps();
+			connection = CommonMappingHelper.getConnectionIps();
 			DataHolder.getInstance().setConnection(connection);
 			
 			return connection;

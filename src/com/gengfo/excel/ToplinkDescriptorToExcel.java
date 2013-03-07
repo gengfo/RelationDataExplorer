@@ -32,7 +32,7 @@ import oracle.toplink.sessions.Project;
 import org.apache.log4j.Logger;
 
 import com.gengfo.common.CommonConstants;
-import com.gengfo.mapping.utils.MappingHelper;
+import com.gengfo.mapping.utils.CommonMappingHelper;
 import com.gengfo.or.OR4ToplinkHelper;
 import com.gengfo.or.common.DataHolder;
 import com.gengfo.or.common.ExlOutputSheetHelper;

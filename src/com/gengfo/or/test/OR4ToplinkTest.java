@@ -4,7 +4,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import com.gengfo.mapping.utils.DBConstants;
-import com.gengfo.mapping.utils.MappingHelper;
+import com.gengfo.mapping.utils.CommonMappingHelper;
 import com.gengfo.or.OR4ToplinkHelper;
 
 
@@ -16,7 +16,7 @@ public class OR4ToplinkTest {
 
         long startTime = System.currentTimeMillis();
     
-        MappingHelper.dbEnv = DBConstants.DB_DEV;
+        CommonMappingHelper.dbEnv = DBConstants.DB_DEV;
         String toFileName = "ipsToExcelSheets.xls";
         
         //sample search 

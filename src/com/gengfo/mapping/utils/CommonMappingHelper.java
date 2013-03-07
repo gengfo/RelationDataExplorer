@@ -19,23 +19,21 @@ import java.util.Vector;
 import oracle.toplink.descriptors.RelationalDescriptor;
 import oracle.toplink.internal.helper.DatabaseTable;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import com.gengfo.excel.EclipselinkDescriptorToExcel;
-import com.gengfo.exception.MultiKeyFieldException;
 import com.gengfo.mapping.eclipselink.DataOutputHelper4EclipseLink;
 import com.gengfo.mapping.toplink.TableRel;
 import com.gengfo.mapping.toplink.ToplinkMappingHelper;
 import com.gengfo.mapping.toplink.ToplinkProjectManual;
 import com.gengfo.or.OR4ToplinkHelper;
-import com.gengfo.or.common.CommonUtils;
 import com.gengfo.or.common.DataHolder;
+import com.gengfo.or.common.DbUtils;
 
-public class MappingHelper {
+public class CommonMappingHelper {
 
-    private static Logger logger = LogManager.getLogger(MappingHelper.class);
+    public static Logger logger = LogManager.getLogger(CommonMappingHelper.class);
 
     private static final long serialVersionUID = 1L;
 
@@ -145,29 +143,15 @@ public class MappingHelper {
         return DriverManager.getConnection(url, username, password);
     }
 
-    public static String getTableKeyField(String tableName) throws MultiKeyFieldException {
-
-        String atableName = "";
-        if (tableName.contains(".")) {
-            atableName = tableName.substring(tableName.indexOf(".") + 1, tableName.length());
-        } else {
-            atableName = tableName;
-        }
-
-        String tablePkName = DataHolder.getInstance().getTablePkMap().get(atableName);
-        return tablePkName;
-
-    }
-
-    public static List<String> getTableContent(String tableName, String whereClause) {
-        Connection con = null;
+    public static List<String> getTableContentDirectly(String tableName, String whereClause, Connection con) {
+        //Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
 
         List<String> fkValueList = new Vector();
 
         try {
-            con = DataHolder.getInstance().getConnection();
+            //con = DataHolder.getInstance().getConnection();
 
             stmt = con.createStatement();
 
@@ -302,105 +286,6 @@ public class MappingHelper {
         return resultList;
     }
 
-    public static void showTableContent(String tableName, String mappingKey, String oid) {
-
-        Connection con = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-        // StringBuffer sb = new StringBuffer();
-
-        List<String> resultList = new Vector();
-
-        try {
-            // con = getConnectionIps();
-            con = DataHolder.getInstance().getConnection();
-
-            stmt = con.createStatement();
-
-            String sqlToRun = "SELECT * FROM ";
-            sqlToRun = sqlToRun + tableName;
-            sqlToRun = sqlToRun + " WHERE ";
-            sqlToRun = sqlToRun + mappingKey + " = " + oid;
-
-            // to remove
-            System.out.println("To run sql in showTableContent: " + sqlToRun);
-            rs = stmt.executeQuery(sqlToRun);
-
-            // sb.append("\n\r");
-            int row = 0;
-            while (rs.next()) {
-                row = row + 1;
-
-                System.out.print(" === row ");
-                // sb.append(" === row ");
-
-                System.out.print(row);
-                // sb.append(row);
-
-                System.out.print(" ");
-                // sb.append(" ");
-
-                System.out.print(tableName);
-                // sb.append(tableName);
-
-                System.out.print(" === ");
-                // sb.append(" === ");
-
-                System.out.println();
-                // sb.append("\n\r");
-
-                ResultSetMetaData rsmd = rs.getMetaData();
-                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                    String columnName = rsmd.getColumnLabel(i);
-
-                    // System.out.print("column name: ");
-                    // sb.append("column name: ");
-
-                    System.out.print(columnName);
-                    // sb.append(columnName);
-
-                    System.out.print(" = ");
-                    // sb.append(" = ");
-
-                    System.out.print(rs.getString(i));
-                    // sb.append(rs.getString(i));
-
-                    // get return keys
-
-                    // String key = (String)
-                    // // getTableKeyMapManual().get(tableName);
-                    // String key = null;
-                    // if (REL_USAGE.equals("TOPLINK")) {
-                    // key = (String) ToplinkProjectHelper.getTableKeyMap()
-                    // .get(tableName);
-                    // }
-                    // if (REL_USAGE.equals("MANAUL")) {
-                    // key = (String) ToplinkProjectManual
-                    // .getTableKeyMapManual().get(tableName);
-                    // }
-                    // if (columnName.equals(key)) {
-                    // resultList.add(rs.getString(i));
-                    // }
-                    //
-                    // System.out.println();
-                    // sb.append("\n\r");
-                }
-            }
-        } catch (Exception e) {
-
-        } finally {
-
-            try {
-                stmt.close();
-                con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        }
-        // return resultList;
-    }
-
     public static String showTableContent(String tableName) {
         Connection con = null;
         Statement stmt = null;
@@ -490,86 +375,12 @@ public class MappingHelper {
 
     }
 
-    public static String getDBFiledValueByOid(String tableName, String filedName, String tablePkName,
-            String tablePkValue) {
-        String fieldValue = "";
-        Connection con = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-
-        con = DataHolder.getInstance().getConnection();
-
-        try {
-            stmt = con.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        String sqlToRun = "SELECT ";
-        sqlToRun = sqlToRun + filedName;
-        sqlToRun = sqlToRun + " FROM ";
-        sqlToRun = sqlToRun + tableName;
-        sqlToRun = sqlToRun + " a WHERE ";
-        // sqlToRun = sqlToRun + " a.OID = ";
-        sqlToRun = sqlToRun + tablePkName;
-        sqlToRun = sqlToRun + " = ";
-        sqlToRun = sqlToRun + tablePkValue;
-
-        // to keep
-        // System.out.println("sqlToRun in getDBFiledValueByOid: " + sqlToRun);
-
-        try {
-            rs = stmt.executeQuery(sqlToRun);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            // /while (rsnext()) {
-            if (rs.next()) {
-                fieldValue = rs.getString(1);
-            }
-
-            // }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            stmt.close();
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        // rs = null;
-        // stmt = null;
-        // con = null;
-
-        return fieldValue;
-    }
-
-    public static String getTableFiledValue(String srcTableName, String tableFiledName, String tableFieldValue) {
-        String fieldValue = "";
-        try {
-
-            String tablePkName = getTableKeyField(srcTableName);
-
-            fieldValue = MappingHelper.getDBFiledValueByOid(srcTableName, tableFiledName, tablePkName,
-                    tableFieldValue);
-
-        } catch (MultiKeyFieldException e) {
-            e.printStackTrace();
-        }
-        return fieldValue;
-    }
-
     public static void retrieveSingleTableContent(String aliasName, String mappingKey, String oid) {
 
         String tab = DataHolder.getInstance().getAlias2TableMap().get(aliasName);
 
         List rList = new Vector();
-        MappingHelper.showTableContent(tab, mappingKey, oid);
+        DbUtils.showTableContent(tab, mappingKey, oid);
     }
 
     public static String getTableName(String desAlias) {
@@ -583,15 +394,19 @@ public class MappingHelper {
 
     }
 
-    public static String getKey(String aliasName, String mappingKey, String keyValue) {
-        return aliasName + "-" + mappingKey.toUpperCase() + "-" + keyValue;
+    public static String getKey(String aliasName, String pkName, String pkValue) {
+        return aliasName + "-" + pkName.toUpperCase() + "-" + pkValue;
     }
 
-    public static void initFirstMapping(String aliasName, String mappingKey, String oid) {
+    public static void initFirstMapping(String aliasName, String pkName, String pkValue) {
+        
+        //TODO GENGFO TO EXTACT SET AS PARAMETER
 
         DataHolder handledSet = DataHolder.getInstance();
+        
+        String mappedKeyStr = CommonMappingHelper.getKey(aliasName, pkName, pkValue);
 
-        handledSet.getInstance().getHandledStatus().put(getKey(aliasName, mappingKey, oid), Boolean.FALSE);
+        handledSet.getInstance().getHandledStatus().put(mappedKeyStr, Boolean.FALSE);
 
     }
 
@@ -662,39 +477,7 @@ public class MappingHelper {
     // return sb.toString();
     // }
 
-    public static String getTableRelClause(TableRel tr, String tableKeyValue, String dbSchema) {
-
-        if (StringUtils.isEmpty(tableKeyValue)) {
-            return "";
-        }
-
-        // sample SQL
-        //
-
-        String srcTableName = tr.getSourceTbName();
-
-        if (!StringUtils.isEmpty(dbSchema)) {
-            srcTableName = dbSchema + "." + srcTableName;
-        }
-
-        FieldPair[] fps = tr.getFieldPairs();
-        String whereClause = "";
-
-        for (int i = 0; i < fps.length; i++) {
-            if (i != 0) {
-                whereClause = whereClause + " " + "and" + " ";
-            }
-            FieldPair fp = fps[i];
-            String fk = MappingHelper.getTableFiledValue(srcTableName, fp.getSourceFd(), tableKeyValue);
-            if (!StringUtils.isEmpty(fk)) {
-                whereClause = whereClause + fp.getDestinationFd() + "=" + fk;
-            }
-        }
-
-        return whereClause;
-    }
-
-    public static void outputDataToExcel(Set<String> set, String xlsFileName) {
+    public static void outputDataToExcel(Set<String> set, String xlsFileName, Connection con) {
 
         Set<String> keySet = new TreeSet<String>();
         keySet.addAll(set);
@@ -704,57 +487,7 @@ public class MappingHelper {
 
         keyList.addAll(keySet);
 
-        EclipselinkDescriptorToExcel.toExcelSheetsWithData(xlsFileName, keyList);
-    }
-
-    public static Set<String> collectAllMappingKeys(String aliasName, String key, String oid) {
-
-        initFirstMapping(aliasName, key, oid);
-
-        collectMoreMappingKeys(aliasName, key, oid);
-
-        Set<String> set = DataHolder.getInstance().getHandledStatus().keySet();
-
-        return set;
-    }
-
-    public static void collectMoreMappingKeys(String aliasName, String key, String oid) {
-
-        DataHolder handledSet = DataHolder.getInstance();
-
-        String setKey = getKey(aliasName, key, oid);
-
-        while (null != hasItemToHandle(handledSet.getHandledStatus())) {
-
-            Boolean b = (Boolean) handledSet.getHandledStatus().get(setKey);
-
-            String splited[] = setKey.split("-");
-            aliasName = splited[0];
-            key = splited[1];
-            oid = splited[2];
-
-            if (!b.booleanValue()) {
-
-                CommonUtils.moveToHandled(aliasName, key, oid);
-
-                List<TableRel> tableOwnList = ToplinkMappingHelper
-                        .getTabbleRels(handledSet.getProject(), aliasName);
-
-                for (TableRel tr : tableOwnList) {
-
-                    findMoreToHandle(aliasName, key, oid, tr, MappingHelper.schemaNameIps);
-
-                }
-
-            } else {
-            }
-
-            String asetky = hasItemToHandle(handledSet.getHandledStatus());
-            if (null != asetky) {
-                setKey = asetky;
-            }
-        }
-
+        EclipselinkDescriptorToExcel.toExcelSheetsWithData(xlsFileName, keyList, con);
     }
 
     public static String hasItemToHandle(Map<String, Boolean> theMap) {
@@ -770,40 +503,6 @@ public class MappingHelper {
         }
 
         return null;
-
-    }
-
-    public static void findMoreToHandle(String aliasName, String keyFieldName, String keyFieldValue,
-            TableRel tableRel, String dbSchema) {
-
-        String whereClause = MappingHelper.getTableRelClause(tableRel, keyFieldValue, dbSchema);
-        List<String> fkValueList = MappingHelper.getTableContent(tableRel.getDestTbName(), whereClause);
-        if (null != fkValueList && fkValueList.size() > 0) {
-            for (String akey : fkValueList) {
-                String tmpAlias = "";
-                Map tm = DataHolder.getInstance().getTable2AliasMap();
-                tmpAlias = (String) tm.get(tableRel.getDestTbName());
-                String keyOfAliasKfNameKfValue = getKey(tmpAlias, tableRel.getFieldPairs()[0].getDestinationFd(),
-                        akey);
-                boolean hasflag = false;
-                Map mapOfStatus = DataHolder.getInstance().getHandledStatus();
-                Set<String> keySet = mapOfStatus.keySet();
-                Iterator<String> it = keySet.iterator();
-                while (it.hasNext()) {
-                    String tmpKey = it.next();
-                    if (tmpKey.equals(keyOfAliasKfNameKfValue)) {
-                        hasflag = true;
-                        break;
-                    }
-                }
-                if (!hasflag) {
-                    DataHolder.getInstance().getHandledStatus().put(keyOfAliasKfNameKfValue, Boolean.FALSE);
-                    logger.debug("find new one to handle -> " + keyOfAliasKfNameKfValue);
-                }
-            }
-        } else {
-            // System.out.println("no result");
-        }
 
     }
 
@@ -848,7 +547,7 @@ public class MappingHelper {
 
         String tableName = DBConstants.TB_AR_INV_CHG_POOL;
         String tbOid = "20218";
-        MappingHelper.retrieveSingleTableContent(tableName, null, tbOid);
+        CommonMappingHelper.retrieveSingleTableContent(tableName, null, tbOid);
         OR4ToplinkHelper.outputDataToplink(tableName, null, tbOid, null);
 
         System.out.println("Done!");

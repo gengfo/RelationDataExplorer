@@ -16,7 +16,7 @@ public class SimpleDate2ExcelTest {
 
 		String toFileName = "toExcelSheetsWithData.xls";
 
-		EclipselinkDescriptorToExcel.toExcelSheetsWithData(toFileName, keyList);
+		EclipselinkDescriptorToExcel.toExcelSheetsWithData(toFileName, keyList, null);
 		
 		
 		System.out.println("Done");

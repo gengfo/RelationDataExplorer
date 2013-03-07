@@ -38,7 +38,7 @@ import org.eclipse.persistence.mappings.OneToOneMapping;
 
 import com.gengfo.common.CommonConstants;
 import com.gengfo.mapping.toplink.ToplinkMappingHelper;
-import com.gengfo.mapping.utils.MappingHelper;
+import com.gengfo.mapping.utils.CommonMappingHelper;
 import com.gengfo.or.OR4EclipselinkHelper;
 import com.gengfo.or.common.DataHolder;
 import com.gengfo.or.common.ExlOutputSheetHelper;
@@ -714,7 +714,7 @@ public class EclipselinkDescriptorToExcel {
 	}
 
 	public static void toExcelSheetsWithData(String toFileName,
-			List<String> keyList) {
+			List<String> keyList, Connection con) {
 
 		WritableWorkbook wwb = null;
 
@@ -733,7 +733,7 @@ public class EclipselinkDescriptorToExcel {
 		int rowCnt = 40;
 		
 		
-		Connection  con = DataHolder.getInstance().getConnection();
+		//Connection  con = DataHolder.getInstance().getConnection();
 		 Statement stmt =null;
           try {
              stmt = con.createStatement();

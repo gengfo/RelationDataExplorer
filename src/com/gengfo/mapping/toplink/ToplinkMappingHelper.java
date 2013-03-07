@@ -21,6 +21,7 @@ import org.eclipse.persistence.internal.jpa.metamodel.EntityTypeImpl;
 import oracle.toplink.descriptors.RelationalDescriptor;
 import oracle.toplink.internal.helper.DatabaseField;
 import oracle.toplink.mappings.DatabaseMapping;
+import oracle.toplink.mappings.ManyToManyMapping;
 import oracle.toplink.mappings.OneToManyMapping;
 import oracle.toplink.mappings.OneToOneMapping;
 import oracle.toplink.publicinterface.Descriptor;
@@ -31,368 +32,366 @@ import com.gengfo.exception.MultiKeyFieldException;
 import com.gengfo.mapping.eclipselink.EclipseLinkMappingHelper;
 import com.gengfo.mapping.utils.DBConstants;
 import com.gengfo.mapping.utils.FieldPair;
-import com.gengfo.mapping.utils.MappingHelper;
+import com.gengfo.mapping.utils.CommonMappingHelper;
 import com.gengfo.or.OR4ToplinkHelper;
 import com.gengfo.or.common.DataHolder;
 import com.oocl.ivo.domain.mapping.IVOProject;
 
 public class ToplinkMappingHelper {
 
-	public static Project getProject(String projectXml) {
+    public static Project getProject(String projectXml) {
 
-		return XMLProjectReader.read(projectXml);
+        return XMLProjectReader.read(projectXml);
 
-	}
+    }
 
-	public static Descriptor getDescriptor(String aliasName) {
+    public static Descriptor getDescriptor(String aliasName) {
 
-		Project ivoProject = ToplinkMappingHelper.getIvoProject();
+        Project ivoProject = ToplinkMappingHelper.getIvoProject();
 
-		Descriptor descriptor = (RelationalDescriptor) ivoProject
-				.getAliasDescriptors().get(aliasName);
+        Descriptor descriptor = (RelationalDescriptor) ivoProject.getAliasDescriptors().get(aliasName);
 
-		return descriptor;
-	}
+        return descriptor;
+    }
 
-	public static Project getIvoProject() {
+    public static Project getIvoProject() {
 
-		return new IVOProject();
+        return new IVOProject();
 
-	}
+    }
 
-	/**
-	 * the map cotains: <li>key: tableName <li>primary key field
-	 * 
-	 * @return
-	 * @throws MultiKeyFieldException
-	 */
-	public static Map<String, String> getTablePKeyMapToplink() {
+    /**
+     * the map cotains: <li>key: tableName <li>primary key field
+     * 
+     * @return
+     * @throws MultiKeyFieldException
+     */
+    public static Map<String, String> getTablePKeyMapToplink() {
 
-		Map<String, String> tableKeyMap = new HashMap();
+        Map<String, String> tableKeyMap = new HashMap();
 
-		// Project theProject = getProject(DBConstants.PRJ_CONF_XML);
-		Project theProject = OR4ToplinkHelper.getIVOProject();
+        // Project theProject = getProject(DBConstants.PRJ_CONF_XML);
+        Project theProject = OR4ToplinkHelper.getIVOProject();
 
-		Map aliasDescMap = theProject.getAliasDescriptors();
-		Set keySet = aliasDescMap.keySet();
-		Iterator keySetIt = keySet.iterator();
+        Map aliasDescMap = theProject.getAliasDescriptors();
+        Set keySet = aliasDescMap.keySet();
+        Iterator keySetIt = keySet.iterator();
 
-		while (keySetIt.hasNext()) {
-			String tableName = (String) keySetIt.next();
-			RelationalDescriptor rd = (RelationalDescriptor) aliasDescMap
-					.get(tableName);
+        while (keySetIt.hasNext()) {
+            String tableName = (String) keySetIt.next();
+            RelationalDescriptor rd = (RelationalDescriptor) aliasDescMap.get(tableName);
 
-			List pkList = rd.getPrimaryKeyFields();
-			if (pkList.size() == 1) {
-				DatabaseField pk = (DatabaseField) pkList.get(0);
+            List pkList = rd.getPrimaryKeyFields();
+            if (pkList.size() == 1) {
+                DatabaseField pk = (DatabaseField) pkList.get(0);
 
-				tableKeyMap.put(rd.getTableName(), pk.getName());
-			} else {
-				// throw (new MultiKeyFieldException());
-			}
+                tableKeyMap.put(rd.getTableName(), pk.getName());
+            } else {
+                // throw (new MultiKeyFieldException());
+            }
 
-		}
+        }
 
-		return tableKeyMap;
-	}
+        return tableKeyMap;
+    }
 
-	public static Map<String, String> getTableNameAliasMapToplink() {
-		Map<String, String> tableKeyMap = new Hashtable();
+    public static Map<String, String> getTableNameAliasMapToplink() {
+        Map<String, String> tableKeyMap = new Hashtable();
 
-		// Project theProject = getProject(DBConstants.PRJ_CONF_XML);
-		Project theProject = OR4ToplinkHelper.getIVOProject();
+        // Project theProject = getProject(DBConstants.PRJ_CONF_XML);
+        Project theProject = OR4ToplinkHelper.getIVOProject();
 
-		Map aliasDescMap = theProject.getAliasDescriptors();
-		Set keySet = aliasDescMap.keySet();
-		Iterator keySetIt = keySet.iterator();
+        Map aliasDescMap = theProject.getAliasDescriptors();
+        Set keySet = aliasDescMap.keySet();
+        Iterator keySetIt = keySet.iterator();
 
-		while (keySetIt.hasNext()) {
-			String tableName = (String) keySetIt.next();
-			RelationalDescriptor rd = (RelationalDescriptor) aliasDescMap
-					.get(tableName);
+        while (keySetIt.hasNext()) {
+            String tableName = (String) keySetIt.next();
+            RelationalDescriptor rd = (RelationalDescriptor) aliasDescMap.get(tableName);
 
-			List pkList = rd.getPrimaryKeyFields();
-			if (pkList.size() == 1) {
-				DatabaseField pk = (DatabaseField) pkList.get(0);
+            List pkList = rd.getPrimaryKeyFields();
+            if (pkList.size() == 1) {
+                DatabaseField pk = (DatabaseField) pkList.get(0);
 
-				tableKeyMap.put(rd.getTableName(), rd.getAlias());
-			} else {
-				// throw (new MultiKeyFieldException());
-			}
+                tableKeyMap.put(rd.getTableName(), rd.getAlias());
+            } else {
+                // throw (new MultiKeyFieldException());
+            }
 
-		}
+        }
 
-		return tableKeyMap;
-	}
+        return tableKeyMap;
+    }
 
-	public static Map<String, Descriptor> getAliasDescriptorMapToplink() {
+    public static Map<String, Descriptor> getAliasDescriptorMapToplink() {
 
-		Project theProject = DataHolder.getInstance().getProject();
+        Project theProject = DataHolder.getInstance().getProject();
 
-		Map aliasDescMap = theProject.getAliasDescriptors();
-		// DataHolder.getInstance().getAlias2Descriptor().putAll(aliasDescMap);
+        Map aliasDescMap = theProject.getAliasDescriptors();
+        // DataHolder.getInstance().getAlias2Descriptor().putAll(aliasDescMap);
 
-		return aliasDescMap;
-	}
+        return aliasDescMap;
+    }
 
-	public static Map<String, Descriptor> getAliasDescriptorMapElipseLink() {
+    public static Map<String, Descriptor> getAliasDescriptorMapElipseLink() {
 
-		Project theProject = DataHolder.getInstance().getProject();
+        Project theProject = DataHolder.getInstance().getProject();
 
-		Map aliasDescMap = theProject.getAliasDescriptors();
-		// DataHolder.getInstance().getAlias2Descriptor().putAll(aliasDescMap);
+        Map aliasDescMap = theProject.getAliasDescriptors();
+        // DataHolder.getInstance().getAlias2Descriptor().putAll(aliasDescMap);
 
-		return aliasDescMap;
-	}
+        return aliasDescMap;
+    }
 
-	public static RelationalDescriptor filterRelationalDescriptor(
-			Project theProject, String tableName) {
+    public static RelationalDescriptor filterRelationalDescriptor(Project theProject, String tableName) {
 
-		Map aliasDescMap = theProject.getAliasDescriptors();
-		Set keySet = aliasDescMap.keySet();
-		Iterator keySetIt = keySet.iterator();
+        Map aliasDescMap = theProject.getAliasDescriptors();
+        Set keySet = aliasDescMap.keySet();
+        Iterator keySetIt = keySet.iterator();
 
-		RelationalDescriptor rd = (RelationalDescriptor) aliasDescMap
-				.get(tableName);
+        RelationalDescriptor rd = (RelationalDescriptor) aliasDescMap.get(tableName);
 
-		return rd;
+        return rd;
 
-	}
+    }
 
-	public static List<TableRel> getTabbleRels(Project theProject, String alias) {
+    public static List<TableRel> getTabbleRels(Project theProject, String alias) {
 
-		RelationalDescriptor rd = filterRelationalDescriptor(theProject, alias);
+        RelationalDescriptor rd = filterRelationalDescriptor(theProject, alias);
 
-		List<TableRel> tableRelList = getTabbleRels(rd);
+        List<TableRel> tableRelList = getTabbleRels(rd);
 
-		return tableRelList;
+        return tableRelList;
 
-	}
+    }
 
-	public static List<TableRel> getTabbleRels(RelationalDescriptor rd) {
+    public static List<TableRel> getTabbleRels(RelationalDescriptor rd) {
 
-		List<TableRel> tableRelList = new ArrayList<TableRel>();
+        List<TableRel> tableRelList = new ArrayList<TableRel>();
 
-		List mapList = rd.getMappings();
-		// for each one to one mapping or oneto many maaping
-		for (int i = 0; i < mapList.size(); i++) {
-			TableRel tr = new TableRel();
+        List mapList = rd.getMappings();
+        // for each one to one mapping or oneto many maaping
+        for (int i = 0; i < mapList.size(); i++) {
+            TableRel tr = new TableRel();
 
-			tr.setSourceAliasName(rd.getAlias());
+            tr.setSourceAliasName(rd.getAlias());
 
-			DatabaseMapping rm = (DatabaseMapping) mapList.get(i);
+            DatabaseMapping rm = (DatabaseMapping) mapList.get(i);
 
-			if (rm instanceof OneToOneMapping) {
+            if (rm instanceof OneToOneMapping) {
 
-				OneToOneMapping oom = (OneToOneMapping) mapList.get(i);
+                OneToOneMapping oom = (OneToOneMapping) mapList.get(i);
 
-				// oom.get
+                // oom.get
 
-				Map keysMap = oom.getSourceToTargetKeyFields();
+                Map keysMap = oom.getSourceToTargetKeyFields();
 
-				Set keyset = keysMap.keySet();
-				if (keyset.size() > 0) {
-					// throw exception
-				}
-				Iterator it = keyset.iterator();
-				if (it.hasNext()) {
-					DatabaseField keyField = (DatabaseField) it.next();
-					DatabaseField valueField = (DatabaseField) keysMap
-							.get(keyField);
+                Set keyset = keysMap.keySet();
+                if (keyset.size() > 0) {
+                    // throw exception
+                }
+                Iterator it = keyset.iterator();
+                if (it.hasNext()) {
+                    DatabaseField keyField = (DatabaseField) it.next();
+                    DatabaseField valueField = (DatabaseField) keysMap.get(keyField);
 
-					FieldPair[] fps = new FieldPair[1];
-					FieldPair fp = new FieldPair();
-					fps[0] = fp;
-					tr.setFieldPairs(fps);
+                    FieldPair[] fps = new FieldPair[1];
+                    FieldPair fp = new FieldPair();
+                    fps[0] = fp;
+                    tr.setFieldPairs(fps);
 
-					String srcTableName = keyField.getTableName();
-					String destTableName = valueField.getTableName();
-					String srcTableFieldName = keyField.getName();
-					String destTableFieldName = valueField.getName();
+                    String srcTableName = keyField.getTableName();
+                    String destTableName = valueField.getTableName();
+                    String srcTableFieldName = keyField.getName();
+                    String destTableFieldName = valueField.getName();
 
-					tr.setSourceTbName(srcTableName);
+                    tr.setSourceTbName(srcTableName);
 
-					tr.setDestTbName(destTableName);
+                    tr.setDestTbName(destTableName);
 
-					tr.setRelType(DBConstants.MAPPING_TYPE_ONETOONE);
-					fp.setSourceFd(srcTableFieldName);
-					fp.setDestinationFd(destTableFieldName);
-				}
-				tableRelList.add(tr);
-			} else if (rm instanceof OneToManyMapping) {
+                    tr.setRelType(DBConstants.MAPPING_TYPE_ONETOONE);
+                    fp.setSourceFd(srcTableFieldName);
+                    fp.setDestinationFd(destTableFieldName);
+                }
+                tableRelList.add(tr);
+            } else if (rm instanceof OneToManyMapping) {
 
-				OneToManyMapping omm = (OneToManyMapping) mapList.get(i);
-				List srcKeysList = omm.getSourceKeyFields();
-				List destKeyList = omm.getTargetForeignKeyFields();
-				// check the second key
-				if (srcKeysList.size() == 1 && destKeyList.size() == 1) {
-					DatabaseField keyField = (DatabaseField) srcKeysList.get(0);
-					DatabaseField valueField = (DatabaseField) destKeyList
-							.get(0);
+                OneToManyMapping omm = (OneToManyMapping) mapList.get(i);
+                List srcKeysList = omm.getSourceKeyFields();
+                List destKeyList = omm.getTargetForeignKeyFields();
+                // check the second key
+                if (srcKeysList.size() == 1 && destKeyList.size() == 1) {
+                    DatabaseField keyField = (DatabaseField) srcKeysList.get(0);
+                    DatabaseField valueField = (DatabaseField) destKeyList.get(0);
 
-					FieldPair[] fps = new FieldPair[1];
-					FieldPair fp = new FieldPair();
-					fps[0] = fp;
-					tr.setFieldPairs(fps);
+                    FieldPair[] fps = new FieldPair[1];
+                    FieldPair fp = new FieldPair();
+                    fps[0] = fp;
+                    tr.setFieldPairs(fps);
 
-					String srcTableName = keyField.getTableName();
-					String destTableName = valueField.getTableName();
-					String srcTableFieldName = keyField.getName();
-					String destTableFieldName = valueField.getName();
+                    String srcTableName = keyField.getTableName();
+                    String destTableName = valueField.getTableName();
+                    String srcTableFieldName = keyField.getName();
+                    String destTableFieldName = valueField.getName();
 
-					tr.setSourceTbName(srcTableName);
-					tr.setDestTbName(destTableName);
-					tr.setRelType(DBConstants.MAPPING_TYPE_ONETOMANY);
+                    tr.setSourceTbName(srcTableName);
+                    tr.setDestTbName(destTableName);
+                    tr.setRelType(DBConstants.MAPPING_TYPE_ONETOMANY);
 
-					fp.setSourceFd(srcTableFieldName);
-					fp.setDestinationFd(destTableFieldName);
+                    fp.setSourceFd(srcTableFieldName);
+                    fp.setDestinationFd(destTableFieldName);
 
-					tableRelList.add(tr);
-				} else {
-					// TODOgengfo throw MultiKeyFieldException
-				}
+                    tableRelList.add(tr);
+                } else {
+                    // TODOgengfo throw MultiKeyFieldException
+                }
 
-			}
+            } else if (rm instanceof ManyToManyMapping) {
+                ManyToManyMapping omm = (ManyToManyMapping) mapList.get(i);
+                omm.getRelationTable();
+                
+                omm.getDescriptor();
+                
+                
+                //omm.getDescriptor();
+                
 
-		}
+            }
 
-		return tableRelList;
-	}
+        }
 
-	public static List getIVOTableRels() {
-		List<TableRel> tableRelList = new ArrayList<TableRel>();
+        return tableRelList;
+    }
 
-		// --
-		// Project theProject = getProject(DBConstants.PRJ_CONF_XML);
-		Project theProject = OR4ToplinkHelper.getIVOProject();
+    public static List getIVOTableRels() {
+        List<TableRel> tableRelList = new ArrayList<TableRel>();
 
-		Map aliasDescMap = theProject.getAliasDescriptors();
-		Set keySet = aliasDescMap.keySet();
-		Iterator keySetIt = keySet.iterator();
+        // --
+        // Project theProject = getProject(DBConstants.PRJ_CONF_XML);
+        Project theProject = OR4ToplinkHelper.getIVOProject();
 
-		// For each descriptor
-		while (keySetIt.hasNext()) {
-			String tableName = (String) keySetIt.next();
-			// remove comments
-			// if (null != DBHelperR0202.getTableKeyField(tableName)) {
-			RelationalDescriptor rd = (RelationalDescriptor) aliasDescMap
-					.get(tableName);
+        Map aliasDescMap = theProject.getAliasDescriptors();
+        Set keySet = aliasDescMap.keySet();
+        Iterator keySetIt = keySet.iterator();
 
-			System.out.println("---------------- " + tableName
-					+ "------------------------------");
+        // For each descriptor
+        while (keySetIt.hasNext()) {
+            String tableName = (String) keySetIt.next();
+            // remove comments
+            // if (null != DBHelperR0202.getTableKeyField(tableName)) {
+            RelationalDescriptor rd = (RelationalDescriptor) aliasDescMap.get(tableName);
 
-			List mapList = rd.getMappings();
-			// for each one to one mapping or oneto many maaping
-			for (int i = 0; i < mapList.size(); i++) {
-				TableRel tr = new TableRel();
+            System.out.println("---------------- " + tableName + "------------------------------");
 
-				DatabaseMapping rm = (DatabaseMapping) mapList.get(i);
+            List mapList = rd.getMappings();
+            // for each one to one mapping or oneto many maaping
+            for (int i = 0; i < mapList.size(); i++) {
+                TableRel tr = new TableRel();
 
-				if (rm instanceof OneToOneMapping) {
+                DatabaseMapping rm = (DatabaseMapping) mapList.get(i);
 
-					OneToOneMapping oom = (OneToOneMapping) mapList.get(i);
+                if (rm instanceof OneToOneMapping) {
 
-					Map keysMap = oom.getSourceToTargetKeyFields();
+                    OneToOneMapping oom = (OneToOneMapping) mapList.get(i);
 
-					Set keyset = keysMap.keySet();
-					if (keyset.size() > 0) {
-						// throw exception
-					}
-					Iterator it = keyset.iterator();
-					if (it.hasNext()) {
-						DatabaseField keyField = (DatabaseField) it.next();
-						DatabaseField valueField = (DatabaseField) keysMap
-								.get(keyField);
+                    Map keysMap = oom.getSourceToTargetKeyFields();
 
-						FieldPair[] fps = new FieldPair[1];
-						FieldPair fp = new FieldPair();
-						fps[0] = fp;
-						tr.setFieldPairs(fps);
+                    Set keyset = keysMap.keySet();
+                    if (keyset.size() > 0) {
+                        // throw exception
+                    }
+                    Iterator it = keyset.iterator();
+                    if (it.hasNext()) {
+                        DatabaseField keyField = (DatabaseField) it.next();
+                        DatabaseField valueField = (DatabaseField) keysMap.get(keyField);
 
-						String srcTableName = keyField.getTableName();
-						String destTableName = valueField.getTableName();
-						String srcTableFieldName = keyField.getName();
-						String destTableFieldName = valueField.getName();
+                        FieldPair[] fps = new FieldPair[1];
+                        FieldPair fp = new FieldPair();
+                        fps[0] = fp;
+                        tr.setFieldPairs(fps);
 
-						tr.setSourceTbName(srcTableName);
-						tr.setDestTbName(destTableName);
-						tr.setRelType(DBConstants.MAPPING_TYPE_ONETOONE);
-						fp.setSourceFd(srcTableFieldName);
-						fp.setDestinationFd(destTableFieldName);
-					}
-					tableRelList.add(tr);
-				} else if (rm instanceof OneToManyMapping) {
+                        String srcTableName = keyField.getTableName();
+                        String destTableName = valueField.getTableName();
+                        String srcTableFieldName = keyField.getName();
+                        String destTableFieldName = valueField.getName();
 
-					OneToManyMapping omm = (OneToManyMapping) mapList.get(i);
-					List srcKeysList = omm.getSourceKeyFields();
-					List destKeyList = omm.getTargetForeignKeyFields();
-					// check the second key
-					if (srcKeysList.size() == 1 && destKeyList.size() == 1) {
-						DatabaseField keyField = (DatabaseField) srcKeysList
-								.get(0);
-						DatabaseField valueField = (DatabaseField) destKeyList
-								.get(0);
+                        tr.setSourceTbName(srcTableName);
+                        tr.setDestTbName(destTableName);
+                        tr.setRelType(DBConstants.MAPPING_TYPE_ONETOONE);
+                        fp.setSourceFd(srcTableFieldName);
+                        fp.setDestinationFd(destTableFieldName);
+                    }
+                    tableRelList.add(tr);
+                } else if (rm instanceof OneToManyMapping) {
 
-						FieldPair[] fps = new FieldPair[1];
-						FieldPair fp = new FieldPair();
-						fps[0] = fp;
-						tr.setFieldPairs(fps);
+                    OneToManyMapping omm = (OneToManyMapping) mapList.get(i);
+                    List srcKeysList = omm.getSourceKeyFields();
+                    List destKeyList = omm.getTargetForeignKeyFields();
+                    // check the second key
+                    if (srcKeysList.size() == 1 && destKeyList.size() == 1) {
+                        DatabaseField keyField = (DatabaseField) srcKeysList.get(0);
+                        DatabaseField valueField = (DatabaseField) destKeyList.get(0);
 
-						String srcTableName = keyField.getTableName();
-						String destTableName = valueField.getTableName();
-						String srcTableFieldName = keyField.getName();
-						String destTableFieldName = valueField.getName();
+                        FieldPair[] fps = new FieldPair[1];
+                        FieldPair fp = new FieldPair();
+                        fps[0] = fp;
+                        tr.setFieldPairs(fps);
 
-						tr.setSourceTbName(srcTableName);
-						tr.setDestTbName(destTableName);
-						tr.setRelType(DBConstants.MAPPING_TYPE_ONETOMANY);
+                        String srcTableName = keyField.getTableName();
+                        String destTableName = valueField.getTableName();
+                        String srcTableFieldName = keyField.getName();
+                        String destTableFieldName = valueField.getName();
 
-						fp.setSourceFd(srcTableFieldName);
-						fp.setDestinationFd(destTableFieldName);
+                        tr.setSourceTbName(srcTableName);
+                        tr.setDestTbName(destTableName);
+                        tr.setRelType(DBConstants.MAPPING_TYPE_ONETOMANY);
 
-						tableRelList.add(tr);
-					} else {
-						// TODOgengfo throw MultiKeyFieldException
-					}
+                        fp.setSourceFd(srcTableFieldName);
+                        fp.setDestinationFd(destTableFieldName);
 
-				}
+                        tableRelList.add(tr);
+                    } else {
+                        // TODOgengfo throw MultiKeyFieldException
+                    }
 
-			}
-			// to remove comments
-			// }
-		}
+                }
 
-		return tableRelList;
-	}
+            }
+            // to remove comments
+            // }
+        }
 
-	public static String getTableName(String key) {
-		// sample: tableName.tablefiled
+        return tableRelList;
+    }
 
-		return (key.substring(0, key.indexOf(".") - 1));
-	}
+    public static String getTableName(String key) {
+        // sample: tableName.tablefiled
 
-	public static String getTableFieldName(String key) {
-		return (key.substring(key.indexOf(".") + 1, key.length()));
-	}
+        return (key.substring(0, key.indexOf(".") - 1));
+    }
 
-	public static void showTableList(List<TableRel> trList) {
+    public static String getTableFieldName(String key) {
+        return (key.substring(key.indexOf(".") + 1, key.length()));
+    }
 
-		if (null == trList || trList.size() == 0) {
-			return;
-		}
+    public static void showTableList(List<TableRel> trList) {
 
-		StringBuffer sb = new StringBuffer();
-		for (TableRel tr : trList) {
+        if (null == trList || trList.size() == 0) {
+            return;
+        }
 
-			sb.append(tr.getDestTbName());
-			sb.append("  ");
-			sb.append(tr.getRelType());
-			sb.append("\n");
+        StringBuffer sb = new StringBuffer();
+        for (TableRel tr : trList) {
 
-		}
+            sb.append(tr.getDestTbName());
+            sb.append("  ");
+            sb.append(tr.getRelType());
+            sb.append("\n");
 
-		System.out.println(sb.toString());
+        }
 
-	}
+        System.out.println(sb.toString());
+
+    }
 
 }

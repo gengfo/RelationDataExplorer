@@ -1,7 +1,7 @@
 package com.gengfo.test.toplink;
 
 import com.gengfo.mapping.utils.DBConstants;
-import com.gengfo.mapping.utils.MappingHelper;
+import com.gengfo.mapping.utils.CommonMappingHelper;
 import com.gengfo.or.OR4ToplinkHelper;
 
 public class ToplinkShowRepositoryChargeInDbTest {
@@ -19,7 +19,7 @@ public class ToplinkShowRepositoryChargeInDbTest {
 		//String tbOid = "29468";
 		String tbOid = "87739";
 		
-		MappingHelper.retrieveSingleTableContent(theTableName, null, tbOid);
+		CommonMappingHelper.retrieveSingleTableContent(theTableName, null, tbOid);
 		OR4ToplinkHelper.outputDataToplink(theTableName, null, tbOid, null);
 		 
 		// //DBConstants.TB_AR_INV_REF_TPMC

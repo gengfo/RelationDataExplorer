@@ -1,7 +1,7 @@
 package com.gengfo.test.toplink;
 
 import com.gengfo.mapping.utils.DBConstants;
-import com.gengfo.mapping.utils.MappingHelper;
+import com.gengfo.mapping.utils.CommonMappingHelper;
 import com.gengfo.or.OR4ToplinkHelper;
 
 
@@ -24,7 +24,7 @@ public class ToplinkShowInvoiceInDbTest {
 		//String tbOid = "40226";
 		//String tbOid = "45961";
 		//String tbOid = "43252";
-		MappingHelper.dbEnv = DBConstants.DB_DEV;
+		CommonMappingHelper.dbEnv = DBConstants.DB_DEV;
 		String tbOid = "50481";
 		//String tbOid = "64983";
 		
