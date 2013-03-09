@@ -10,9 +10,40 @@ public class TableRel {
 	private String destTbName;
 	private String relType; // OneToOne ; OneToMany ; ManyToMany
 	// to add descrition to resolve refer to same table
-	private FieldPair[] fieldPairs;
+	private FieldPair[] fieldPairs; //if many to many to get relationship table pair
+	
+	private org.eclipse.persistence.mappings.DatabaseMapping eclipseLinkDm ;
+	
+	private oracle.toplink.mappings.DatabaseMapping toplinkDm;
+	
+	private oracle.toplink.mappings.ManyToManyMapping toplinkMMDm; 
 
-	public String getMiddleTbName() {
+	
+	public oracle.toplink.mappings.ManyToManyMapping getToplinkMMDm() {
+        return toplinkMMDm;
+    }
+
+    public void setToplinkMMDm(oracle.toplink.mappings.ManyToManyMapping toplinkMMDm) {
+        this.toplinkMMDm = toplinkMMDm;
+    }
+
+    public org.eclipse.persistence.mappings.DatabaseMapping getEclipseLinkDm() {
+        return eclipseLinkDm;
+    }
+
+    public void setEclipseLinkDm(org.eclipse.persistence.mappings.DatabaseMapping eclipseLinkDm) {
+        this.eclipseLinkDm = eclipseLinkDm;
+    }
+
+    public oracle.toplink.mappings.DatabaseMapping getToplinkDm() {
+        return toplinkDm;
+    }
+
+    public void setToplinkDm(oracle.toplink.mappings.DatabaseMapping toplinkDm) {
+        this.toplinkDm = toplinkDm;
+    }
+
+    public String getMiddleTbName() {
 		return middleTbName;
 	}
 

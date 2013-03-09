@@ -143,54 +143,6 @@ public class CommonMappingHelper {
         return DriverManager.getConnection(url, username, password);
     }
 
-    public static List<String> getTableContentDirectly(String tableName, String whereClause, Connection con) {
-        //Connection con = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-
-        List<String> fkValueList = new Vector();
-
-        try {
-            //con = DataHolder.getInstance().getConnection();
-
-            stmt = con.createStatement();
-
-            String sqlToRun = "SELECT * FROM ";
-            sqlToRun = sqlToRun + tableName;
-            sqlToRun = sqlToRun + " WHERE ";
-            sqlToRun = sqlToRun + whereClause;
-
-            logger.debug("to get relations->" + sqlToRun);
-
-            rs = stmt.executeQuery(sqlToRun);
-            int row = 0;
-            while (rs.next()) {
-                row = row + 1;
-                ResultSetMetaData rsmd = rs.getMetaData();
-
-                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                    String columnName = rsmd.getColumnLabel(i);
-                    String key = DataHolder.getInstance().getTablePkMap().get(tableName);
-                    if (columnName.equals(key)) {
-                        fkValueList.add(rs.getString(i));
-                    }
-
-                }
-            }
-        } catch (Exception e) {
-
-        } finally {
-            try {
-                stmt.close();
-
-                con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return fkValueList;
-    }
-
     public static List<String> showTableContent(String tableName, String whereClause) {
         Connection con = null;
         Statement stmt = null;

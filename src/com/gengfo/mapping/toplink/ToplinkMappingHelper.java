@@ -176,9 +176,9 @@ public class ToplinkMappingHelper {
 
             tr.setSourceAliasName(rd.getAlias());
 
-            DatabaseMapping rm = (DatabaseMapping) mapList.get(i);
+            DatabaseMapping databaseMapping = (DatabaseMapping) mapList.get(i);
 
-            if (rm instanceof OneToOneMapping) {
+            if (databaseMapping instanceof OneToOneMapping) {
 
                 OneToOneMapping oom = (OneToOneMapping) mapList.get(i);
 
@@ -214,7 +214,7 @@ public class ToplinkMappingHelper {
                     fp.setDestinationFd(destTableFieldName);
                 }
                 tableRelList.add(tr);
-            } else if (rm instanceof OneToManyMapping) {
+            } else if (databaseMapping instanceof OneToManyMapping) {
 
                 OneToManyMapping omm = (OneToManyMapping) mapList.get(i);
                 List srcKeysList = omm.getSourceKeyFields();
@@ -241,22 +241,27 @@ public class ToplinkMappingHelper {
                     fp.setSourceFd(srcTableFieldName);
                     fp.setDestinationFd(destTableFieldName);
 
-                    tableRelList.add(tr);
+                   tableRelList.add(tr);
                 } else {
                     // TODOgengfo throw MultiKeyFieldException
                 }
 
-            } else if (rm instanceof ManyToManyMapping) {
-                ManyToManyMapping omm = (ManyToManyMapping) mapList.get(i);
-                omm.getRelationTable();
-                
-                omm.getDescriptor();
-                
-                
+            } else if (databaseMapping instanceof ManyToManyMapping) {
+               
+                //omm.getRelationTable();
                 //omm.getDescriptor();
                 
+                tr.setRelType(DBConstants.MAPPING_TYPE_MANYTOMANY);
+                ManyToManyMapping omm = (ManyToManyMapping) mapList.get(i);
+                tr.setToplinkMMDm(omm);
+                
+                //omm.getDescriptor();
+                tableRelList.add(tr);
 
             }
+            
+            //final add tr
+           
 
         }
 

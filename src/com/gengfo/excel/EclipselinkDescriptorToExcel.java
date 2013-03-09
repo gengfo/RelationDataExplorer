@@ -190,21 +190,21 @@ public class EclipselinkDescriptorToExcel {
 			}
 
 
-//			if (map instanceof DirectToFieldMapping) {
-//				handleDirectToFieldMapping(map, scBean, i);
-//			}
-//
-//			if (map instanceof OneToOneMapping) {
-//				handleOneToOneMapping(map, wwb, scBean, i);
-//			}
-//
-//			if (map instanceof OneToManyMapping) {
-//				handleOneToManyMapping(map, wwb, scBean, i);
-//			}
-//
-//			if (map instanceof ManyToManyMapping) {
-//				handleManyToManyMapping(map, wwb, scBean, i);
-//			}
+			if (map instanceof DirectToFieldMapping) {
+				handleDirectToFieldMapping(map, scBean, i);
+			}
+
+			if (map instanceof OneToOneMapping) {
+				handleOneToOneMapping(map, wwb, scBean, i);
+			}
+
+			if (map instanceof OneToManyMapping) {
+				handleOneToManyMapping(map, wwb, scBean, i);
+			}
+
+			if (map instanceof ManyToManyMapping) {
+				handleManyToManyMapping(map, wwb, scBean, i);
+			}
 
 		}
 	}
@@ -602,7 +602,7 @@ public class EclipselinkDescriptorToExcel {
 				SheetContentBean scBean = EclipselinkDescriptorToExcel
 						.toSheetContentBean4EclipseLink(wwb, descriptor);
 				ExlOutputSheetHelper.fillSheet(wwb, scBean);
-				logger.debug("debug");
+				//logger.debug("debug");
 
 				//
 				CellBean cb = new CellBean();
@@ -643,7 +643,7 @@ public class EclipselinkDescriptorToExcel {
 
 	public static void toExcelSheets(String toFileName, Project theProject) {
 
-		logger.debug("enter toExcelSheets");
+		//logger.debug("enter toExcelSheets");
 
 		toFileName = "DescriptorToExcelTest.xls";
 

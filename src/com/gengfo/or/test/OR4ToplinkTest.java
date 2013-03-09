@@ -20,14 +20,19 @@ public class OR4ToplinkTest {
         String toFileName = "ipsToExcelSheets.xls";
         
         //sample search 
-        //OR4ToplinkHelper.outputDataToplink("ARNote", "oid", "1536", toFileName);
+       // OR4ToplinkHelper.outputDataToplink("ARNote", "oid", "1536", toFileName);
+        
+        //OR4ToplinkHelper.outputDataToplink("Invoice", "oid", "1536", toFileName);
+        
+        OR4ToplinkHelper.outputDataToplink("InvoiceCharge", "oid", "18043", toFileName);
+        
         
         //OR4ToplinkHelper.outputDataToplink("CascadeNumRange", "oid", "1536", toFileName);
         
         //OR4ToplinkHelper.outputDataToplink("BussinessGroup", "ID", "101001", toFileName);
         //OR4ToplinkHelper.outputDataToplink("BussinessGroup", "ID", "70001", toFileName);
         
-        OR4ToplinkHelper.outputDataToplink("ChargeCode", "ID", "365", toFileName);  //to test many to may with this case
+       // OR4ToplinkHelper.outputDataToplink("ChargeCode", "ID", "365", toFileName);  //to test many to may with this case
         
     
         long endTime = System.currentTimeMillis();
